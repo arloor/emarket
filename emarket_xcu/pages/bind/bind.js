@@ -54,9 +54,9 @@ Page({
           that.alertBindFail();
         }else{
           app.globalData.weiUser = res.data;
-          wx.showToast({
-            title: '绑定成功',
-          })
+          // wx.showToast({
+          //   title: '绑定成功',
+          // })
           wx.redirectTo({
             url: '/pages/index/index',
           })
