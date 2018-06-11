@@ -54,13 +54,15 @@ Page({
     })
   },
   getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+    // console.log(e)
+    app.globalData.weiUser.avatarUrl = e.detail.userInfo.avatarUrl;
+    app.globalData.weiUser.nickName = e.detail.userInfo.nickName;
     this.setData({
-      userInfo: e.detail.userInfo,
+      weiUser: app.globalData.weiUser,
       hasUserInfo: true
     })
-    wx.navigateTo({
+    console.log("更新后的weiUser", app.globalData.weiUser);
+    wx.redirectTo({
       url: '/pages/bind/bind',
     })
   }

@@ -15,6 +15,10 @@ Page({
   
   },
 
+  formSubmit:function(e){
+    console.log("填写的用户名密码",e.detail.value);
+    //todo
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
