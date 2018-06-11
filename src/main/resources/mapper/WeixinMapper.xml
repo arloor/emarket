@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.arloor.emarket.dao.WeixinMapper">
+    <insert id="insertNewOpenId">
+        insert into weuname(openId, uname) value (#{openId},null);
+    </insert>
+
+    <select id="weiGetUserIngo" resultType="com.arloor.emarket.model.WeiUser">
+        select weuname.openId,weuname.avatarUrl,user.* from weuname left join user on weuname.uname=user.uname where weuname.openId=#{openId};
+</select>
+</mapper>
