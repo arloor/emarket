@@ -10,7 +10,7 @@ Target Server Type    : MariaDB
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-06-11 11:30:22
+Date: 2018-06-11 21:59:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -139,5 +139,21 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('moontell', '刘港欢', '123456', '1293181335@qq.com', 'ROLE_MEMBER', '100.00', '123456', '000000', '0');
+INSERT INTO `user` VALUES ('moontell', '刘港欢', '123456', '1293181335@qq.com', 'ROLE_MEMBE', '100.00', '123456', '000000', '0');
+
+-- ----------------------------
+-- Table structure for weuname
+-- ----------------------------
+DROP TABLE IF EXISTS `weuname`;
+CREATE TABLE `weuname` (
+  `openId` varchar(50) NOT NULL,
+  `uname` varchar(30) DEFAULT NULL,
+  `avatarUrl` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`openId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of weuname
+-- ----------------------------
+INSERT INTO `weuname` VALUES ('o9YQ65Gne9YDl4Fr_ftyp8joLPrk', null, null);
 SET FOREIGN_KEY_CHECKS=1;
