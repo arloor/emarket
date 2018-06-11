@@ -1,4 +1,7 @@
 // pages/bind/bind.js
+//获取应用实例
+const app = getApp()
+
 Page({
 
   /**
@@ -6,6 +9,17 @@ Page({
    */
   data: {
   
+  },
+  showTopTips: function () {
+    var that = this;
+    this.setData({
+      showTopTips: true
+    });
+    setTimeout(function () {
+      that.setData({
+        showTopTips: false
+      });
+    }, 3000);
   },
 
   /**
@@ -17,54 +31,53 @@ Page({
 
   formSubmit:function(e){
     console.log("填写的用户名密码",e.detail.value);
+    if(e.detail.value.username==""||e.detail.value.passwd==""){
+      this.showTopTips();
+      return;
+    }
+    app.globalData.weiUser.uname = e.detail.value.username;
+    app.globalData.weiUser.passwd = e.detail.value.passwd;
+    console.log("全局用户信息：",app.globalData.weiUser);
     //todo
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+    var that=this;
+    wx.request({
+      url: app.apiURL+'/weixin/bindUser',
+      header: { 'content-type': 'application/json' },
+      method: "post",
+      data: app.globalData.weiUser,
+      success:function(res){
+        console.log("绑定结果：",res.data);
+        if(res.data.uname==null){
+          app.globalData.weiUser=res.data;
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+          //提示绑定失败
+          that.alertBindFail();
+        }else{
+          app.globalData.weiUser = res.data;
+          wx.showToast({
+            title: '绑定成功',
+          })
+          wx.redirectTo({
+            url: '/pages/index/index',
+          })
+        }
+        
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  quitBind:function(){
+    console.log("放弃绑定");
+    console.log("全局用户信息：", app.globalData.weiUser);
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  alertBindFail: function () {
+    wx.showModal({
+      content: '用户名或密码错误，请重新绑定',
+      showCancel: false,
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        }
+      }
+    });
   }
 })

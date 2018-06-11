@@ -3,12 +3,14 @@ package com.arloor.emarket.controller;
 import com.arloor.emarket.dao.WeixinMapper;
 import com.arloor.emarket.model.OpenIdJson;
 import com.arloor.emarket.model.WeiUser;
+import com.arloor.emarket.service.WeixinUserService;
 import com.arloor.emarket.utils.MyHttpClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +21,12 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/weixin")
 public class WeixinController {
-
-
-
     private Logger logger= LoggerFactory.getLogger(WeixinController.class);
+
+    @Autowired
+    WeixinUserService weixinUserService;
+
+
 
     @Autowired
     private MyHttpClient httpClient;
@@ -58,11 +62,12 @@ public class WeixinController {
         try {
             openIdJson=objectMapper.readValue(openIdStr,OpenIdJson.class);
             String openId=openIdJson.getOpenid();
-            logger.info("openid为: "+openId);
+
 
             WeiUser weiUser=weixinMapper.weiGetUserIngo(openId);
             if(weiUser==null) {//说明没有使用过这个小程序
                 //插入这个openId
+                logger.info("openid为: "+openId+"第一次使用小程序");
                 weixinMapper.insertNewOpenId(openId);
                 weiUser=new WeiUser();
                 weiUser.setOpenId(openId);
@@ -72,6 +77,21 @@ public class WeixinController {
             e.printStackTrace();
         }
         return null;
+    }
+    @RequestMapping("/bindUser")
+    public WeiUser bindUser(@RequestBody WeiUser weiUser){
+
+        try {
+            //这个方法有事务
+            weiUser=weixinUserService.bindUser(weiUser);
+            logger.info("绑定小程序用户"+weiUser.getOpenId()+"到用户名："+weiUser.getUname()+"成功");
+
+        }catch (RuntimeException e){//catch 运行时异常，以便能正常返回结果
+            logger.info("绑定小程序用户"+weiUser.getOpenId()+"到用户名："+weiUser.getUname()+"失败，事务回滚");
+            //将weiUser的uname设为null，然后返回小程序
+            weiUser.setUname(null);
+        }
+        return weiUser;
     }
 
 

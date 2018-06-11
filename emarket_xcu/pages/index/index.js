@@ -21,7 +21,8 @@ Page({
       this.setData({
         weiUser: app.globalData.weiUser
       })
-      console.log("uname"+this.data.weiUser.uname);
+      console.log("uname",this.data.weiUser.uname);
+      console.log("weiUser", this.data.weiUser);
       if (this.data.weiUser.uname != null) {
         this.setData({
           hasUserInfo: true
@@ -41,14 +42,15 @@ Page({
             hasUserInfo: true
           })
         }
-        console.log("index 用户信息：", this.data);
+        console.log("index 用户信息：", this.data.weiUser);
       }
       
     }
+    //多搞一个js_code
     wx.login({
       success: function (res) {
         if (res.code) {
-          console.log("js_code",res.code)
+          console.log("多余地js_code",res.code)
         }
       }
     })

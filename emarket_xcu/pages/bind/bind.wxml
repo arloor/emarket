@@ -1,4 +1,5 @@
 <!--pages/bind/bind.wxml-->
+<view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">用户名或密码为空</view>
 <form bindsubmit="formSubmit" bindreset="formReset" report-submit='true'> 
         <view class="weui-cells__title">雍物集登陆</view>
         <view class="weui-cells weui-cells_after-title">
@@ -19,7 +20,7 @@
                 </view>
             </view>
         </view>
-        <view class="weui-cells__tips">点击绑定，手机购物</view>
+        <view class="weui-cells__tips">点击绑定，手机购物<navigator style='display:inline;color:#FF0000' bindtap='quitBind' url="/pages/index/index"  open-type="redirect">放弃绑定</navigator></view>
         <view class="weui-btn-area">
             <button class="weui-btn" formType="submit" type="primary">确定</button>
         </view>

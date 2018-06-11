@@ -9,4 +9,6 @@ public interface WeixinMapper {
     WeiUser weiGetUserIngo(@Param("openId") String openId);
 
     void insertNewOpenId(@Param("openId") String openId);
+
+    void bindOpenIdUser(WeiUser weiUser);
 }
