@@ -129,30 +129,9 @@
         <view class="weui-search-bar__text">搜索</view>
       </label>
     </view>
-    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="doSearch">搜索</view>
   </view>
-  <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
-  </view>
+ 
 </view>
 
 
@@ -161,7 +140,7 @@
   <view wx:if="{{hasUserInfo}}" class="page__bd">
     <view class="weui-grids">
       <block wx:for="{{tags}}" wx:for-item="tag">
-        <navigator url="/pages/tagproducts/tagproducts?tag={{tag.tagId}}" class="weui-grid" hover-class="weui-grid_active">
+        <navigator url="/pages/products/products?tag={{tag.tagId}}" class="weui-grid" hover-class="weui-grid_active">
           <!-- <image class="weui-grid__icon" src="../images/icon_tabbar.png" /> -->
           <view class="weui-grid__label">{{tag.tagName}}</view>
         </navigator>

@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/bind/bind",
-    "pages/tagproducts/tagproducts",
+    "pages/products/products",
     "pages/home/home"
   ],
   "window": {

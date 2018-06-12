@@ -24,7 +24,8 @@ Page({
     pickIndex: 0,
     images: [],
     imageObject: null,
-    pinfo: ""
+    pinfo: "",
+    inputVal:""
   },
   //事件处理函数
   bindViewTap: function () {
@@ -83,15 +84,7 @@ Page({
 
     }
 
-    initQiniu();
-    //多搞一个js_code
-    wx.login({
-      success: function (res) {
-        if (res.code) {
-          console.log("多余地js_code", res.code)
-        }
-      }
-    })
+    initQiniu();//初始化7牛相关参数
   },
   getUserInfo: function (e) {
     // console.log(e)
@@ -134,11 +127,26 @@ Page({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  doSearch: function () {
+    console.log("搜索关键词", this.data.inputVal);
+    if (this.data.inputVal==""){
+      wx.showToast({
+        title: '关键词为空！',
+      })
+      return false;
+    }
+
+    var keyword = (this.data.inputVal);
     this.setData({
       inputVal: "",
       inputShowed: false
     });
+
+    //todo:根据keyword进行搜索
+    wx.navigateTo({
+      url: '/pages/products/products?keyword='+keyword,
+    })
+
   },
   clearInput: function () {
     this.setData({
@@ -201,7 +209,7 @@ Page({
     console.log("商品信息：", product);
     if (product.pname == "" || product.pinfo == "" || product.inventory == "" || product.price == "" || product.oldPrice == "") {
       wx.showModal({
-        content: '还有空的数据没有填写哦',
+        content: '还有信息没有填写哦',
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
