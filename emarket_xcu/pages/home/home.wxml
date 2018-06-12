@@ -1,2 +1,4 @@
 <!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+
+<view wx:if="{{role == 'ROLE_SELLER' }}">
+</view>

@@ -7,32 +7,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    role:"ROLE_MEMBER",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    if(app.globalData.weiUser.uname==null){
-      console.log("尚未登陆");
-    }else{
-      console.log("已经登陆");
-    }
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      role: app.globalData.weiUser.role
+    });
+    console.log(this.data.role, app.globalData.weiUser.nickName, "进入个人中心");
   },
 
   /**

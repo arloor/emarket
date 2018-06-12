@@ -2,7 +2,9 @@
 
 <!--用户信息  -->
 <view class="userinfo">
-  <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="weui-btn mini-btn" type="primary">登陆雍物集</button>
+  <view wx:if="{{!hasUserInfo}}" class='container'>
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="weui-btn mini-btn" type="primary">登陆雍物集</button>
+  </view>
   <block wx:else>
     <image bindtap="bindViewTap" class="userinfo-avatar" src="{{weiUser.avatarUrl}}" background-size="cover"></image>
     <text class="userinfo-nickname">{{weiUser.nickName}}</text>
@@ -10,8 +12,109 @@
   </block>
 </view>
 
+<!--SELLER对应的上传商品区域  -->
+<view wx:if="{{weiUser.role == 'ROLE_SELLER'}}">
+  <form bindsubmit="upload" bindreset="formReset" report-submit='true'>
+    <view class="weui-cells__title">发布到雍物集</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">商品名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="pname" placeholder="请输入商品名" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">分类</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange="bindPickerChange" value="{{pickIndex}}" range="{{tagNames}}">
+            <button type="default">{{tagNames[pickIndex]}}</button>
+          </picker>
+        </view>
+      </view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" bindblur='bindTextareaBlur' auto-height placeholder="请输入商品介绍" style="height: 3.3em" />
+            <!-- <view class="weui-textarea-counter">0/200</view> -->
+          </view>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">库存</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="inventory" placeholder="请输入库存" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">现价</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="price" placeholder="请输入现价" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">原价</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="oldPrice" placeholder="请输入原件" />
+        </view>
+      </view>
+
+      <view class="page__bd">
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__hd">
+                  <view class="weui-uploader__title">图片上传</view>
+                  <view class="weui-uploader__info">{{images.length}}/1</view>
+                </view>
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files" id="uploaderFiles">
+                    <block wx:for="{{images}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                      </view>
+                    </block>
+                  </view>
+                  
+                  <view wx:if='{{images.length==0}}' class="weui-uploader__input-box">
+                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                  </view>
+                </view>
+                <view class="weui-progress">
+                    <view class="weui-progress__bar">
+                      <progress percent="{{progress}}" stroke-width="3" />
+                    </view>
+                  </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+    <view class="weui-btn-area">
+      <button class="weui-btn" formType="submit" type="primary">发布商品</button>
+    </view>
+  </form>
+
+</view>
+
 <!--搜索栏  -->
-<view class="page__bd">
+<view wx:if="{{hasUserInfo}}" class="page__bd">
   <view class="weui-search-bar">
     <view class="weui-search-bar__form">
       <view class="weui-search-bar__box">
@@ -57,16 +160,15 @@
 <view class="page">
   <view wx:if="{{hasUserInfo}}" class="page__bd">
     <view class="weui-grids">
-      <block wx:for="{{grids}}" wx:for-item="label" data-index="{{ index }}">
-        <navigator url="/pages/tagproducts/tagproducts?tag=1{{index+1}}" class="weui-grid" hover-class="weui-grid_active">
+      <block wx:for="{{tags}}" wx:for-item="tag">
+        <navigator url="/pages/tagproducts/tagproducts?tag={{tag.tagId}}" class="weui-grid" hover-class="weui-grid_active">
           <!-- <image class="weui-grid__icon" src="../images/icon_tabbar.png" /> -->
-          <view class="weui-grid__label">{{label}}</view>
+          <view class="weui-grid__label">{{tag.tagName}}</view>
         </navigator>
       </block>
     </view>
   </view>
-</view>
-
-<view class="page__bd page__bd_spacing">
-  <button class="weui-btn" type="primary">购物车</button>
+  <view wx:if="{{hasUserInfo}}" class="page__bd page__bd_spacing">
+    <button class="weui-btn" type="primary">购物车</button>
+  </view>
 </view>

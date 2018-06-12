@@ -28,8 +28,7 @@ public class WeixinUserService {
     public WeiUser bindUser( WeiUser weiUser){
         weixinMapper.bindOpenIdUser(weiUser);
         Euser euser=euserMapper.selectByPrimaryKey(weiUser.getUname());
-        //如果用户的身份不为ROLE_MEMBER，同样绑定失败
-        if(euser==null||euser.getPasswd()==null||!euser.getPasswd().equals(weiUser.getPasswd())||!euser.getRole().equals("ROLE_MEMBER")){
+        if(euser==null||euser.getPasswd()==null||!euser.getPasswd().equals(weiUser.getPasswd())){
             //在这里，应该回滚
             throw new RuntimeException("用户名密码错误，事务回滚");
         }else{

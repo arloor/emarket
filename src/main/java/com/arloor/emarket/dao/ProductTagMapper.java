@@ -3,6 +3,8 @@ package com.arloor.emarket.dao;
 import com.arloor.emarket.domain.ProductTag;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ProductTagMapper {
     /**
@@ -52,4 +54,6 @@ public interface ProductTagMapper {
      * @mbggenerated Mon Jun 11 11:16:20 CST 2018
      */
     int updateByPrimaryKey(ProductTag record);
+
+    List<ProductTag> selectAllLength2();
 }
