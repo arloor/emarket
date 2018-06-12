@@ -33,6 +33,8 @@ public class WeixinUserService {
             //在这里，应该回滚
             throw new RuntimeException("用户名密码错误，事务回滚");
         }else{
+            weiUser.setNickName(euser.getNickName());
+            weiUser.setPasswd(null);
             weiUser.setBalance(euser.getBalance());
             weiUser.setEmail(euser.getEmail());
         }

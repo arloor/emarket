@@ -90,6 +90,7 @@ public class WeixinController {
             logger.info("绑定小程序用户"+weiUser.getOpenId()+"到用户名："+weiUser.getUname()+"失败，事务回滚");
             //将weiUser的uname设为null，然后返回小程序
             weiUser.setUname(null);
+            weiUser.setPasswd(null);
         }
         return weiUser;
     }

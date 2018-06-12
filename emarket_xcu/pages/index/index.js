@@ -58,7 +58,7 @@ Page({
   getUserInfo: function(e) {
     // console.log(e)
     app.globalData.weiUser.avatarUrl = e.detail.userInfo.avatarUrl;
-    app.globalData.weiUser.nickName = e.detail.userInfo.nickName;
+    // app.globalData.weiUser.nickName = e.detail.userInfo.nickName;
     this.setData({
       weiUser: app.globalData.weiUser,
       hasUserInfo: true
