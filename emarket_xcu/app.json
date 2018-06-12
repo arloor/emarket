@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/bind/bind"
+    "pages/bind/bind",
+    "pages/tagproducts/tagproducts",
+    "pages/home/home"
   ],
   "window": {
     "backgroundTextStyle": "light",

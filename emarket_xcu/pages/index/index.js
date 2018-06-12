@@ -7,12 +7,13 @@ Page({
     motto: 'Hello World',
     weiUser:null,
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    grids: ["T恤", "帆布袋", "钥匙扣", "笔记本", "杯子", "卡贴", "书签", "明信片", "U盘"]
   },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '/pages/home/home'
     })
   },
   onLoad: function () {
@@ -87,6 +88,30 @@ Page({
     app.globalData.weiUser=this.data.weiUser;
     console.log("注销之后的weiUser", app.globalData.weiUser);
     
+  },
+
+
+  //搜索栏相关
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
   }
   
 })
