@@ -38,7 +38,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         http.authorizeRequests()
                 .antMatchers("/","/index").permitAll()
-                .antMatchers("/home").hasRole("MEMBER")
+                .antMatchers("/productConfig").hasRole("SELLER")
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
                 .formLogin()

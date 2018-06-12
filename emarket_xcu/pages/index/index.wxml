@@ -1,13 +1,12 @@
 <!--index.wxml-->
+
+<view class="userinfo">
+  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="weui-btn mini-btn" type="primary">登陆雍物集</button>
+  <block wx:else>
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{weiUser.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{weiUser.nickName}}</text>
+    <view style='display:inline;color:#FF0000' bindtap='cancelBind'>注销</view>
+  </block>
+</view>
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="weui-btn mini-btn" type="primary" >登陆雍物集</button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{weiUser.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{weiUser.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
 </view>

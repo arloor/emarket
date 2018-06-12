@@ -7,6 +7,9 @@
     <update id="bindOpenIdUser">
         update weuname set avatarUrl=#{avatarUrl},uname=#{uname} where openid=#{openId};
     </update>
+    <update id="clearBind">
+        update weuname set uname=null where openId=#{openId};
+    </update>
 
     <select id="weiGetUserIngo" resultType="com.arloor.emarket.model.WeiUser">
         select weuname.openId,weuname.avatarUrl,user.* from weuname left join user on weuname.uname=user.uname where weuname.openId=#{openId};

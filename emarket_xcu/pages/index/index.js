@@ -67,6 +67,26 @@ Page({
     wx.redirectTo({
       url: '/pages/bind/bind',
     })
+  },
+  cancelBind:function(e){
+    console.log("注销绑定");
+    //todo：连接后端数据库，进行注销
+    wx.request({
+      url: app.apiURL + '/weixin/unBind?openId=' + this.data.weiUser.openId,
+      success:function(res){
+        console.log("注销所删除的记录数量",res.data)
+      }
+    })
+    //设置微信小程序的weiUser
+    var varWeiUser={};
+    varWeiUser.openId=this.data.weiUser.openId;
+    this.setData({
+      weiUser: varWeiUser,
+      hasUserInfo:false//一个标记，用于条件渲染
+    })
+    app.globalData.weiUser=this.data.weiUser;
+    console.log("注销之后的weiUser", app.globalData.weiUser);
+    
   }
   
 })

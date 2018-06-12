@@ -10,3 +10,8 @@
 
 ![avatar](ER图.jpg)
 
+```js
+header: { 'content-type': 'application/json' },
+method: "post",
+```
+

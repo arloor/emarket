@@ -72,6 +72,7 @@ public class WeixinController {
                 weiUser=new WeiUser();
                 weiUser.setOpenId(openId);
             }
+            weiUser.setPasswd(null);
             return weiUser;
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,14 +86,22 @@ public class WeixinController {
             //这个方法有事务
             weiUser=weixinUserService.bindUser(weiUser);
             logger.info("绑定小程序用户"+weiUser.getOpenId()+"到用户名："+weiUser.getUname()+"成功");
-
+            weiUser=weixinMapper.weiGetUserIngo(weiUser.getOpenId());
         }catch (RuntimeException e){//catch 运行时异常，以便能正常返回结果
             logger.info("绑定小程序用户"+weiUser.getOpenId()+"到用户名："+weiUser.getUname()+"失败，事务回滚");
             //将weiUser的uname设为null，然后返回小程序
             weiUser.setUname(null);
-            weiUser.setPasswd(null);
         }
+        weiUser.setPasswd(null);
         return weiUser;
+    }
+
+    @RequestMapping("/unBind")
+    public int unBind(@RequestParam String openId){
+        logger.info("openId: "+openId+" 的微信用户正在注销绑定");
+        int numDelte= weixinMapper.clearBind(openId);
+        logger.info("成功清空 "+numDelte+" 条绑定记录");
+        return numDelte;
     }
 
 
