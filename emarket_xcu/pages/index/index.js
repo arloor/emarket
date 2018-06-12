@@ -17,17 +17,17 @@ function initQiniu() {
 Page({
   data: {
     motto: 'Hello World',
-    weiUser:null,
+    weiUser: null,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     tagNames: [],
-    pickIndex:0,
+    pickIndex: 0,
     images: [],
-    imageObject:null,
-    pinfo:""
+    imageObject: null,
+    pinfo: ""
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '/pages/home/home'
     })
@@ -35,14 +35,14 @@ Page({
   onLoad: function () {
     var that = this;
     wx.request({
-      url: app.apiURL+'/product/tags',
-      success:function(res){
-        console.log("商品tags",res.data);
+      url: app.apiURL + '/product/tags',
+      success: function (res) {
+        console.log("商品tags", res.data);
         that.setData({
-          tags:res.data,
-          });
-          var tempTagNames=[];
-        for(var i=0;i<that.data.tags.length;i++){
+          tags: res.data,
+        });
+        var tempTagNames = [];
+        for (var i = 0; i < that.data.tags.length; i++) {
           tempTagNames.push(that.data.tags[i].tagName);
         }
         console.log("暂时的tagNames", tempTagNames);
@@ -57,7 +57,7 @@ Page({
       this.setData({
         weiUser: app.globalData.weiUser
       })
-      console.log("uname",this.data.weiUser.uname);
+      console.log("uname", this.data.weiUser.uname);
       console.log("weiUser", this.data.weiUser);
       if (this.data.weiUser.uname != null) {
         this.setData({
@@ -72,7 +72,7 @@ Page({
         this.setData({
           weiUser: res.data
         })
-        console.log("uname" , this.data.weiUser.uname);
+        console.log("uname", this.data.weiUser.uname);
         if (this.data.weiUser.uname != null) {
           this.setData({
             hasUserInfo: true
@@ -80,7 +80,7 @@ Page({
         }
         console.log("index 用户信息：", this.data.weiUser);
       }
-      
+
     }
 
     initQiniu();
@@ -88,12 +88,12 @@ Page({
     wx.login({
       success: function (res) {
         if (res.code) {
-          console.log("多余地js_code",res.code)
+          console.log("多余地js_code", res.code)
         }
       }
     })
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     // console.log(e)
     app.globalData.weiUser.avatarUrl = e.detail.userInfo.avatarUrl;
     // app.globalData.weiUser.nickName = e.detail.userInfo.nickName;
@@ -106,25 +106,25 @@ Page({
       url: '/pages/bind/bind',
     })
   },
-  cancelBind:function(e){
+  cancelBind: function (e) {
     console.log("注销绑定");
     //todo：连接后端数据库，进行注销
     wx.request({
       url: app.apiURL + '/weixin/unBind?openId=' + this.data.weiUser.openId,
-      success:function(res){
-        console.log("注销所删除的记录数量",res.data)
+      success: function (res) {
+        console.log("注销所删除的记录数量", res.data)
       }
     })
     //设置微信小程序的weiUser
-    var varWeiUser={};
-    varWeiUser.openId=this.data.weiUser.openId;
+    var varWeiUser = {};
+    varWeiUser.openId = this.data.weiUser.openId;
     this.setData({
       weiUser: varWeiUser,
-      hasUserInfo:false//一个标记，用于条件渲染
+      hasUserInfo: false//一个标记，用于条件渲染
     })
-    app.globalData.weiUser=this.data.weiUser;
+    app.globalData.weiUser = this.data.weiUser;
     console.log("注销之后的weiUser", app.globalData.weiUser);
-    
+
   },
 
 
@@ -160,20 +160,20 @@ Page({
     })
   },
   //bindTextareaBlur
-  bindTextareaBlur:function(e){
+  bindTextareaBlur: function (e) {
     this.setData(
       {
-        pinfo:e.detail.value
+        pinfo: e.detail.value
       }
     )
-    console.log("商品介绍：",this.data.pinfo);
+    console.log("商品介绍：", this.data.pinfo);
   },
 
   //发布商品 submit
 
-  upload:function(e){
+  upload: function (e) {
     //检查图片是否上传成功
-    if (this.data.imageObject==null){
+    if (this.data.imageObject == null) {
       wx.showModal({
         content: '没有选择图片/图片还没有上传成功',
         showCancel: false,
@@ -185,19 +185,21 @@ Page({
       });
       return false;
     }
- 
+
 
     console.log(e.detail.value);
-    var product={};
-    product.pname=e.detail.value.pname;
-    product.tag="1"+(this.data.pickIndex+1);
-    product.pinfo=this.data.pinfo;
+    var product = {};
+    product.pname = e.detail.value.pname;
+    var tagIndex = parseInt(this.data.pickIndex) + 1;
+    product.tag = "1" + tagIndex;
+    product.pinfo = this.data.pinfo;
     product.inventory = e.detail.value.inventory;
     product.price = e.detail.value.price;
     product.oldPrice = e.detail.value.oldPrice;
     product.imageURL = this.data.imageObject.imageURL;
-    console.log("商品信息：",product);
-    if (product.pname == "" || product.pinfo == "" || product.inventory == "" || product.price == "" || product.oldPrice=="") {
+    product.sellerName = app.globalData.weiUser.uname;
+    console.log("商品信息：", product);
+    if (product.pname == "" || product.pinfo == "" || product.inventory == "" || product.price == "" || product.oldPrice == "") {
       wx.showModal({
         content: '还有空的数据没有填写哦',
         showCancel: false,
@@ -210,25 +212,47 @@ Page({
       return false;
     }
 
-    //todo:存储到数据库
 
-    //发布成功
-    var that=this;
-    wx.showModal({
-      content: '上传成功',
-      showCancel: false,
+    var that = this;
+    wx.request({
+      url: app.apiURL + '/product/newProduct',
+      header: { 'content-type': 'application/json' },
+      method: "post",
+      data: product,
       success: function (res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
-          that.data.imageObject=null;
-          wx.redirectTo({
-            url: '/pages/index/index',
-          })
+        console.log("新增的商品数", res.data)
+        if (res.data == 1) {
+          //发布成功
+          var thatthat = that;
+          wx.showModal({
+            content: '发布成功',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+                thatthat.data.imageObject = null;
+                wx.redirectTo({
+                  url: '/pages/index/index',
+                })
+              }
+            }
+          });
+        } else {
+          wx.showModal({
+            content: '发布失败，请检查数据格式',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              }
+            }
+          });
         }
       }
-    });
-    
-    
+    })
+
+
+
   },
 
   //选择图片
@@ -239,8 +263,8 @@ Page({
       // sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sizeType: ['original'],
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success:function(res){
-         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         that.setData({
           images: that.data.images.concat(res.tempFilePaths)
         });
