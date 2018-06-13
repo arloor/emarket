@@ -134,6 +134,7 @@ Page({
           })
           wx.showToast({
             title: '没有更多啦',
+            duration:"500"
           })
         }
         that.setData({
