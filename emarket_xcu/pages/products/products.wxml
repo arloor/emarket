@@ -1,2 +1,35 @@
 <!--pages/tagproducts/tagproducts.wxml-->
-<text>pages/tagproducts/tagproducts.wxml</text>
+<view class="weui-panel weui-panel_access" style='margin-bottom:120rpx'>
+  <view class="weui-panel__hd">{{sellerNickName}} 商品列表
+    <navigator style='display:inline;color:#FF0000' url='/pages/index/index'>返回首页</navigator>
+  </view>
+  <view class="weui-panel__bd">
+
+    <navigator wx:for="{{products}}" wx:key="pid" wx:for-item="product" url="/pages/productDetail/productDetail?pid={{product.pid}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+        <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
+      </view>
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title">{{product.pname}}</view>
+        <view class="weui-media-box__desc">
+          <view> 价格 {{product.price}}</view>
+          <view>{{product.sellerNickName}}
+            <navigator wx:if="{{ sellerName == '' }}" style='display:inline;color:#FF0000' url='/pages/products/products?sellerName={{product.sellerName}}&sellerNickName={{product.sellerNickName}}'>进店</navigator>
+          </view>
+        </view>
+      </view>
+    </navigator>
+
+
+
+
+  </view>
+  <view wx:if="{{hasMore}}"  class="weui-panel__ft" bindtap='viewMore' >
+    <view class="weui-cell weui-cell_access weui-cell_link">
+      <view class="weui-cell__bd">查看更多</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+  </view>
+</view>
+
+<button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">购物车</button>

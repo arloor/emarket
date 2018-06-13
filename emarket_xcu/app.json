@@ -4,7 +4,8 @@
     "pages/logs/logs",
     "pages/bind/bind",
     "pages/products/products",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/productDetail/productDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
