@@ -21,6 +21,7 @@ Page({
    */
   onLoad: function (options) {
       console.log("跳转到商品列表页面的参数为：",options)
+      this.openLoading();
 
 
       //根据分类进行设置
@@ -37,9 +38,6 @@ Page({
             if (res.data.length == 0) {
               that.setData({
                 hasMore: false
-              })
-              wx.showToast({
-                title: '没有更多啦',
               })
             }
             that.setData({
@@ -74,9 +72,6 @@ Page({
               that.setData({
                 hasMore: false
               })
-              wx.showToast({
-                title: '没有更多啦',
-              })
             }
             that.setData({
               products: that.data.products.concat(res.data),
@@ -107,9 +102,6 @@ Page({
               that.setData({
                 hasMore: false
               })
-              wx.showToast({
-                title: '没有更多啦',
-              })
             }
             that.setData({
               products: that.data.products.concat(res.data),
@@ -129,8 +121,11 @@ Page({
   //查看更多
   viewMore:function(){
     var that = this
+    this.openLoading();
+    var varurl = app.apiURL + '/product/productList?param=' + that.data.paramName + '&value=' + that.data.paramValue + "&minId=" + that.data.minId;
+    console.log("更新所请求的url", varurl);
     wx.request({
-      url: app.apiURL + '/product/productList?param=' + that.data.paramName + '&value=' + that.data.paramValue+"&minId="+that.data.minId,
+      url: varurl,
       success: function (res) {
         console.log("获取的列表为", res.data);
         if (res.data.length == 0) {
@@ -155,6 +150,19 @@ Page({
     })
   },
 
+  //进店
+  enterSeller:function(e){
+    wx.navigateTo({
+      url: e.target.dataset.url,
+    })
+  },
+  openLoading: function () {
+    wx.showToast({
+      title: '数据加载中',
+      icon: 'loading',
+      duration: 500
+    });
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

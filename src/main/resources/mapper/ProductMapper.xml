@@ -83,7 +83,7 @@ order by product.pid DESC limit 0,5;
 from product
   left join productTag on product.tag = productTag.tagId
   left join `user` on product.sellerName = `user`.uname
-        where `user`.nickName like #{keyword} or productTag.tagName like #{keyword} or product.pname like #{keyword} or product.pinfo like #{keyword} <if test="minId > 0 ">and product.pid&lt;#{minId}</if>
+        where <if test=" minId > 0 "> product.pid&lt;#{minId} and</if>(`user`.nickName like #{keyword} or productTag.tagName like #{keyword} or product.pname like #{keyword} or product.pinfo like #{keyword})
 order by product.pid DESC limit 0,5;
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
