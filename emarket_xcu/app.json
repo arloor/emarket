@@ -5,7 +5,8 @@
     "pages/bind/bind",
     "pages/products/products",
     "pages/home/home",
-    "pages/productDetail/productDetail"
+    "pages/productDetail/productDetail",
+    "pages/cart/cart"
   ],
   "window": {
     "backgroundTextStyle": "light",

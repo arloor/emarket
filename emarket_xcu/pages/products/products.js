@@ -21,7 +21,7 @@ Page({
    */
   onLoad: function (options) {
       console.log("跳转到商品列表页面的参数为：",options)
-      this.openLoading();
+      this.openLongLoading();
 
 
       //根据分类进行设置
@@ -134,7 +134,7 @@ Page({
           })
           wx.showToast({
             title: '没有更多啦',
-            duration:"500"
+            duration:500
           })
         }
         that.setData({
@@ -153,7 +153,7 @@ Page({
 
   //进店
   enterSeller:function(e){
-    wx.navigateTo({
+    wx.redirectTo({
       url: e.target.dataset.url,
     })
   },
@@ -162,6 +162,13 @@ Page({
       title: '数据加载中',
       icon: 'loading',
       duration: 500
+    });
+  },
+  openLongLoading: function () {
+    wx.showToast({
+      title: '数据加载中',
+      icon: 'loading',
+      duration: 1000
     });
   },
   /**

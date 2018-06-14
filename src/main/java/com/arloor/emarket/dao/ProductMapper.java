@@ -1,6 +1,7 @@
 package com.arloor.emarket.dao;
 
 import com.arloor.emarket.domain.Product;
+import com.arloor.emarket.model.ProductDetail;
 import com.arloor.emarket.model.ProductListCell;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -62,4 +63,6 @@ public interface ProductMapper {
     List<ProductListCell> selectProductByKeywordPaged(@Param("keyword") String value, @Param("minId")int minId);
 
     List<ProductListCell> selectProductBySellerNamePaged(@Param("sellerName") String value,@Param("minId") int minId);
+
+    ProductDetail selectProductDetailByPid(@Param("pid") int pid);
 }

@@ -1,7 +1,7 @@
 <!--pages/tagproducts/tagproducts.wxml-->
 <view class="weui-panel weui-panel_access" style='margin-bottom:120rpx'>
   <view class="weui-panel__hd">{{sellerNickName}} 商品列表
-    <navigator style='display:inline;color:#FF0000' url='/pages/index/index'>返回首页</navigator>
+    <navigator style='display:inline;color:#FF0000' open-type='reLaunch' url='/pages/index/index'>返回首页</navigator>
   </view>
   <view class="weui-panel__bd">
 
@@ -24,17 +24,19 @@
 
 
   </view>
-  <view wx:if="{{hasMore}}"  class="weui-panel__ft" bindtap='viewMore' >
+  <view wx:if="{{hasMore}}" class="weui-panel__ft" bindtap='viewMore'>
     <view class="weui-cell weui-cell_access weui-cell_link">
       <view class="weui-cell__bd">查看更多</view>
       <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </view>
   </view>
-  <view wx:else  class="weui-panel__ft" >
+  <view wx:else class="weui-panel__ft">
     <view class="weui-cell weui-cell_access weui-cell_link">
       <view class="weui-cell__bd">没有更多啦</view>
     </view>
   </view>
 </view>
 
-<button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">购物车</button>
+<navigator url='/pages/cart/cart'>
+  <button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">购物车</button>
+</navigator>

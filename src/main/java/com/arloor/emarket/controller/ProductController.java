@@ -4,6 +4,7 @@ import com.arloor.emarket.dao.ProductMapper;
 import com.arloor.emarket.dao.ProductTagMapper;
 import com.arloor.emarket.domain.Product;
 import com.arloor.emarket.domain.ProductTag;
+import com.arloor.emarket.model.ProductDetail;
 import com.arloor.emarket.model.ProductListCell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +53,11 @@ public class ProductController {
             return productMapper.selectProductBySellerNamePaged(value,minId);
         }
         return null;
+    }
+
+    @RequestMapping("/productDetail")
+    public ProductDetail productDetail(@RequestParam(defaultValue = "10") int pid){
+        return productMapper.selectProductDetailByPid(pid);
     }
 
 }
