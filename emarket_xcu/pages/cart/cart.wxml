@@ -1,2 +1,50 @@
 <!--pages/cart/cart.wxml-->
-<text>pages/cart/cart.wxml</text>
+<!--pages/tagproducts/tagproducts.wxml-->
+<view class="weui-panel weui-panel_access" style='margin-bottom:120rpx'>
+  <view class="weui-panel__hd">{{sellerNickName}} 商品列表
+    <navigator style='display:inline;color:#FF0000' open-type='reLaunch' url='/pages/index/index'>返回首页</navigator>
+  </view>
+  <view class="weui-panel__bd" wx:for="{{cartCells}}" wx:key="pid" wx:for-item="product">
+
+    <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+        <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
+      </view>
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title">{{product.pname}}</view>
+        <view class="weui-media-box__desc">
+          <view> 价格 {{product.price}}</view>
+          <view>{{product.sellerNickName}}
+            <view style='display:inline;color:#FF0000'>数量 {{product.num}}</view>
+          </view>
+        </view>
+      </view>
+    </navigator>
+
+    <view class="page__bd page__bd_spacing">
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          <view class="placeholder" catchtap='minus' style='font-size:larger' data-index='{{index}}' data-pid='{{product.pid}}'>-</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class="placeholder" style='font-size:larger'>{{product.num}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class="placeholder" catchtap='add'  style='font-size:larger' data-index='{{index}}' data-pid='{{product.pid}}'>+</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+
+  <view class="weui-form-preview">
+    <view class="weui-form-preview__hd">
+      <view class="weui-form-preview__label">总金额</view>
+      <view class="weui-form-preview__value_in-hd">¥{{total}}</view>
+    </view>
+  </view>
+</view>
+
+
+<button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">立即下单</button>

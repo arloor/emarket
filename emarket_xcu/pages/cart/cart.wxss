@@ -1,1 +1,9 @@
 /* pages/cart/cart.wxss */
+.placeholder{
+    text-align: center;
+    margin: 1px;
+     background-color: #EBEBEB; 
+    height: 1.8em;
+    line-height: 1.8em;
+    color: #10203f;
+}

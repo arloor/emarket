@@ -28,6 +28,14 @@ App({
                 url: that.apiURL + '/cart/getCart?uname=' + that.globalData.weiUser.uname,
                 success: function (res) {
 
+                 
+                 //删除数量为0的商品
+                  for (var name in res.data) {//遍历对象属性名  
+                    // console.log(name + ":" + JSON.stringify(this.data.cart[name]));
+                    if (res.data[name].num==0){
+                      delete res.data[name]
+                    }
+                  }
                   //设置用户的购物车
                   that.globalData.cart = res.data;
                   console.log("app 购物车信息：", res.data);

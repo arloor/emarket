@@ -19,10 +19,6 @@
         </view>
       </view>
     </navigator>
-
-
-
-
   </view>
   <view wx:if="{{hasMore}}" class="weui-panel__ft" bindtap='viewMore'>
     <view class="weui-cell weui-cell_access weui-cell_link">
