@@ -78,6 +78,7 @@ Page({
   onHide: function () {
     console.log("cart onHide 更新cart")
     app.uploadCart();
+    app.globalData.cartCells = this.data.cartCells;
   },
   //预览商品图片
   previewImage: function (e) {
@@ -126,6 +127,7 @@ Page({
   onUnload: function () {
     console.log("cart onUnload 更新cart")
     app.uploadCart();
+    app.globalData.cartCells = this.data.cartCells;
   },
 
   /**

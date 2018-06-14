@@ -1,5 +1,5 @@
 // pages/productDetail/productDetail.js
-const app=getApp();
+const app = getApp();
 
 Page({
 
@@ -7,11 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    product:{},
-    op:null,//操作：加购物车还是购买 加车 购买
-    nums:[1,2,3,4,5,6,7,8,9,10],
-    pickIndex:0,
-    num:1
+    product: {},
+    op: null,//操作：加购物车还是购买 加车 购买
+    nums: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    pickIndex: 0,
+    num: 1
   },
 
   /**
@@ -20,20 +20,20 @@ Page({
   onLoad: function (options) {
     console.log("页面跳转options", options)
     console.log("查询商品信息，pid", options.pid);
-    var that=this;
+    var that = this;
     wx.request({
       url: app.apiURL + '/product/productDetail?pid=' + options.pid,
       success: function (res) {
         that.setData({
-          product:res.data
+          product: res.data
         })
         console.log(that.data.product);
       }
     })
   },
-  pressAddCart:function(){
+  pressAddCart: function () {
     this.setData({
-      op:"加车"
+      op: "加车"
     })
     console.log(this.data.op);
   },
@@ -43,11 +43,11 @@ Page({
     })
     console.log(this.data.op);
   },
-  doOp:function(e){
-    console.log(this.data.op+"数量",this.data.num);
+  doOp: function (e) {
+    console.log(this.data.op + "数量", this.data.num);
 
     //加入购物车
-    if(this.data.op=="加车"){
+    if (this.data.op == "加车") {
       console.log("要加入global cart的产品信息：", this.data.product)
       //遍历查看是否有同样的商品
       var key = this.data.product.pid
@@ -59,9 +59,9 @@ Page({
         app.globalData.cart[key].num += this.data.num
       }
       console.log("现在的global cart ", key, " 商品的数量", app.globalData.cart[key].num);
-      console.log("现在的global cart ",app.globalData.cart);
+      console.log("现在的global cart ", app.globalData.cart);
       app.uploadCart();
-      var that=this
+      var that = this
       wx.showModal({
         content: '加入购物车成功',
         showCancel: false,
@@ -73,15 +73,18 @@ Page({
           }
         }
       });
-    }else{//点击购买  todo
-
+    } else {//点击购买  todo
+      console.log("用户要买",this.data.num,"件如下产品",this.data.product);
+      wx.navigateTo({
+        url: '/pages/prebuy/prebuy?num=' + this.data.num+'&pid='+this.data.product.pid,
+      })
     }
   },
   bindPickerChange: function (e) {
     // console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       pickIndex: e.detail.value,
-      num: parseInt(e.detail.value)+1
+      num: parseInt(e.detail.value) + 1
     })
     // console.log(this.data.op,"数量被设为",this.data.num)
   },

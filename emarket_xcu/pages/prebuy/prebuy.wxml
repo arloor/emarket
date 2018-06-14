@@ -1,0 +1,52 @@
+<!--pages/prebuy/prebuy.wxml-->
+<view class="page" style='margin-bottom: 92px;'>
+  <view class="weui-form-preview">
+    <view class="weui-form-preview__hd">
+      <view class="weui-form-preview__label">付款金额</view>
+      <view class="weui-form-preview__value_in-hd">¥{{total}}</view>
+    </view>
+    <view class="weui-form-preview__bd" wx:for="{{products}}" wx:key="pid" wx:for-item="product">
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">商品名</view>
+        <view class="weui-form-preview__value">{{product.pname}}</view>
+      </view>
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">单价</view>
+        <view class="weui-form-preview__value">{{product.price}}</view>
+      </view>
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">数量</view>
+        <view class="weui-form-preview__value">{{product.num}}</view>
+      </view>
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">金额</view>
+        <view class="weui-form-preview__value">{{product.num * product.price}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{showPaykey}}" class="weui-cells weui-cells_after-title" style='position:fixed;bottom:45px;width:100%;'>
+
+<form bindsubmit="order" report-submit='true'>
+  <view class="weui-cell weui-cell_input weui-cell_vcode">
+    <view class="weui-cell__hd">
+      <view class="weui-label">支付密码</view>
+    </view>
+
+
+    <view class="weui-cell__bd">
+      <input class="weui-input" name="paykey" type="password" placeholder="请输入支付密码" />
+    </view>
+
+    <view class="weui-cell__ft">
+      <button class="weui-vcode-btn" formType="submit">确认</button>
+    </view>
+  </view>
+ </form>
+</view>
+
+<view class="weui-form-preview__ft" style='position:fixed;bottom:0;width:100%;'>
+  <navigator open-type="navigateBack" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">取消购买</navigator>
+  <view class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" catchtap='checkPaykey'>确认付款</view>
+</view>

@@ -6,7 +6,8 @@
     "pages/products/products",
     "pages/home/home",
     "pages/productDetail/productDetail",
-    "pages/cart/cart"
+    "pages/cart/cart",
+    "pages/prebuy/prebuy"
   ],
   "window": {
     "backgroundTextStyle": "light",

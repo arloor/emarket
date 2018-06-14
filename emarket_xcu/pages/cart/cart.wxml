@@ -1,6 +1,9 @@
 <!--pages/cart/cart.wxml-->
 <!--pages/tagproducts/tagproducts.wxml-->
 <view class="weui-panel weui-panel_access" style='margin-bottom:120rpx'>
+  <view class="weui-panel__hd">
+    由于缓存设置，商品价格可能不是真实价格
+  </view>
   <view class="weui-panel__hd">{{sellerNickName}} 商品列表
     <navigator style='display:inline;color:#FF0000' open-type='reLaunch' url='/pages/index/index'>返回首页</navigator>
   </view>
@@ -47,4 +50,4 @@
 </view>
 
 
-<button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">立即下单</button>
+<navigator url='/pages/prebuy/prebuy?cart=yes'><button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">立即下单</button></navigator>
