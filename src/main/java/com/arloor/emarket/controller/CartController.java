@@ -29,7 +29,7 @@ public class CartController {
     @RequestMapping(value = "/updateCart",produces = "application/json")
     public  void updateCartByUname(@RequestParam String uname,@RequestParam String cart){
         ValueOperations valueOps=redisTemplate.opsForValue();
-        valueOps.set("cart:"+uname,cart,60*10,TimeUnit.SECONDS);
+        valueOps.set("cart:"+uname,cart,60*5,TimeUnit.SECONDS);
         logger.info("cart:"+uname+" redis记录设置成功，超时时间："+redisTemplate.getExpire("cart:"+uname)+" seconds");
     }
 }

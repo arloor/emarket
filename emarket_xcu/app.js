@@ -59,14 +59,18 @@ App({
   },
   uploadCart: function () {
     console.log("请求参数", "uname=" + this.globalData.weiUser.uname + "&cart=" + JSON.stringify(this.globalData.cart));
-    wx.request({
-      url: this.apiURL + '/cart/updateCart',
-      header: { 'content-type': 'application/x-www-form-urlencoded' },
-      method: "post",
-      data: "uname=" + this.globalData.weiUser.uname + "&cart=" + JSON.stringify(this.globalData.cart),
-      success:function(){
-        console.log("更新服务器购物车成功")
-      }
-    })
+    if (JSON.stringify(this.globalData.cart)!="{}"){
+      wx.request({
+        url: this.apiURL + '/cart/updateCart',
+        header: { 'content-type': 'application/x-www-form-urlencoded' },
+        method: "post",
+        data: "uname=" + this.globalData.weiUser.uname + "&cart=" + JSON.stringify(this.globalData.cart),
+        success: function () {
+          console.log("更新服务器购物车成功")
+        }
+      })
+    }else{
+      console.log("不更新后台购物车");
+    }
   }
 })
