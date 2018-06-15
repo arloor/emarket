@@ -46,7 +46,7 @@ public class OrderService {
         }
 
         //库存不足的商品pid列表
-        List<Integer> noEnoughInventoryPId=new LinkedList<>();
+        List<String> noEnoughInventoryPnameList=new LinkedList<>();
         //真实的总额
         double trueTotal=0;
 
@@ -60,7 +60,7 @@ public class OrderService {
             int pid=productDetailWithNum.getPid();
             Product trueProduct=productMapper.selectByPrimaryKey(pid);
             if(trueProduct.getInventory()<num){//如果库存不足
-                noEnoughInventoryPId.add(pid);
+                noEnoughInventoryPnameList.add(productDetailWithNum.getPname());
                 iterator.remove();
             }else{//库存足够
                 trueProduct.setInventory(trueProduct.getInventory()-num);
@@ -76,11 +76,38 @@ public class OrderService {
         order.setTotal(trueTotal);
         order.setUname(uname);
         orderMapper.insertOrder(order);//在这里通过mybaits获得了自增主键oid
+        long oid=order.getOid();
+
+        //对每个商品增加订单记录
+        for (ProductDetailWithNum product:products
+             ) {
+            Integer pid=product.getPid();
+            Integer num=product.getNum();
+            Double price=product.getPrice()*num;
+            orderMapper.insertOrderDetail(pid,oid,num,price);
+        }
+
+        //下面是对用户balance的操作
+        //首先哈，要将金额转到管理员的账户中，然后要将用户金额减少
+        orderMapper.addBalanceForEuser("admin",trueTotal);
+        orderMapper.addBalanceForEuser(uname,-trueTotal);
 
 
+        //完成了一切
+        orderResult=new NewOrderResult();
+        orderResult.setErrCode("OK");
 
+        StringBuffer sb=new StringBuffer();
+        sb.append("下单成功，实际支出："+trueTotal+"元");
+        if(!noEnoughInventoryPnameList.isEmpty()){
+            sb.append(" \r\n因为库存原因未能购买的商品有: ");
+            for (String pname:noEnoughInventoryPnameList
+                    ) {
+                sb.append(pname+" ");
+            }
+        }
+        orderResult.setErrMsg(sb.toString());
 
-        //还没写好，先让一切数据库操作都回滚
-        throw new RuntimeException("数据库回滚");
+        return orderResult;
     }
 }

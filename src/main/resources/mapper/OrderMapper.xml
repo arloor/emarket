@@ -3,6 +3,12 @@
 <mapper namespace="com.arloor.emarket.dao.OrderMapper">
 
     <insert id="insertOrder" keyProperty="oid" useGeneratedKeys="true">
-        insert into "order"(uname, total) value #{uname},#{total}
+        insert into `order`(uname, total) value ( #{uname},#{total});
     </insert>
+    <insert id="insertOrderDetail">
+        insert into orderDetail(pid,oid,num,price) value(#{pid},#{oid},#{num},#{price})
+    </insert>
+    <update id="addBalanceForEuser">
+        update user set balance=balance+#{change} where uname=#{uname};
+    </update>
 </mapper>

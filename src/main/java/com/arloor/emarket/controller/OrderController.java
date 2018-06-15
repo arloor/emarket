@@ -35,11 +35,10 @@ public class OrderController {
         }catch (Exception e){
             logger.info(uname+"新建价值“"+total+"”的订单，失败。数据库回滚");
             e.printStackTrace();
-        }
-        if(newOrderResult==null){
             newOrderResult=new NewOrderResult();
-            newOrderResult.setErrCode("sql err");
-            newOrderResult.setErrMsg("下单失败");
+            newOrderResult.setErrCode("sqlErr");
+            newOrderResult.setErrMsg("交易事务失败，请重试");
+            return newOrderResult;
         }
 
         return newOrderResult;

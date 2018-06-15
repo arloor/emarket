@@ -50,4 +50,4 @@
 </view>
 
 
-<navigator url='/pages/prebuy/prebuy?cart=yes'><button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">立即下单</button></navigator>
+<navigator wx:if="{{total!=0}}" url='/pages/prebuy/prebuy?cart=yes'><button style='width:100%;position:fixed;bottom:0;' class="weui-btn" type="primary">立即下单</button></navigator>

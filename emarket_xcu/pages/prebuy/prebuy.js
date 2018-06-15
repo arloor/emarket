@@ -10,7 +10,8 @@ Page({
     total: 0,
     products: [],
     consignee: null,
-    paykey:null
+    paykey:null,
+    cart:false,
   },
 
   /**
@@ -28,6 +29,7 @@ Page({
       }
     })
     console.log(options);
+
     if (options.pid != undefined) {//由单个商品详情页面转入
       wx.request({
         url: app.apiURL + '/product/productDetail?pid=' + options.pid,
@@ -44,7 +46,8 @@ Page({
     } else {//由购物车进入
       console.log(app.globalData.cartCells);
       this.setData({
-        products: app.globalData.cartCells
+        products: app.globalData.cartCells,
+        cart:true
       })
 
       var varTotal = 0;
@@ -101,6 +104,7 @@ Page({
           success: function (res) {
             if (res.confirm) {
               console.log('用户确认收货人信息，开始下单')
+              var thatthatthat=thatthat;
               wx.request({
                 url: app.apiURL + '/order/new?total=' + thatthat.data.total + '&uname=' + app.globalData.weiUser.uname + '&paykey=' + thatthat.data.paykey,
                 header: { 'content-type': 'application/json' },
@@ -108,9 +112,25 @@ Page({
                 data: thatthat.data.products,
                 success: function (res) {
                   console.log("下单结果",res.data)
-                  if(res.data.errCode=="fail"){
+                  if(res.data.errCode=="OK"){
                     wx.showModal({
-                      content: "下单失败    "+res.data.errMsg,
+                      content: "下单成功    "+res.data.errMsg,
+                      showCancel: false,
+                      success: function (res) {
+                        
+                        if (res.confirm) {
+                          console.log('用户确定下单成功')
+                          
+                        }
+                        if (thatthatthat.data.cart==true){
+                          console.log('清空购物车信息')
+                          app.globalData.cart = {};
+                        }
+                      }
+                    });
+                  }else{
+                    wx.showModal({
+                      content: "下单失败    " + res.data.errMsg,
                       showCancel: false,
                       success: function (res) {
                         if (res.confirm) {

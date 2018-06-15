@@ -28,11 +28,11 @@ App({
                 url: that.apiURL + '/cart/getCart?uname=' + that.globalData.weiUser.uname,
                 success: function (res) {
 
-                 
-                 //删除数量为0的商品
+
+                  //删除数量为0的商品
                   for (var name in res.data) {//遍历对象属性名  
                     // console.log(name + ":" + JSON.stringify(this.data.cart[name]));
-                    if (res.data[name].num==0){
+                    if (res.data[name].num == 0) {
                       delete res.data[name]
                     }
                   }
@@ -59,18 +59,15 @@ App({
   },
   uploadCart: function () {
     console.log("请求参数", "uname=" + this.globalData.weiUser.uname + "&cart=" + JSON.stringify(this.globalData.cart));
-    if (JSON.stringify(this.globalData.cart)!="{}"){
-      wx.request({
-        url: this.apiURL + '/cart/updateCart',
-        header: { 'content-type': 'application/x-www-form-urlencoded' },
-        method: "post",
-        data: "uname=" + this.globalData.weiUser.uname + "&cart=" + JSON.stringify(this.globalData.cart),
-        success: function () {
-          console.log("更新服务器购物车成功")
-        }
-      })
-    }else{
-      console.log("不更新后台购物车");
-    }
+    wx.request({
+      url: this.apiURL + '/cart/updateCart',
+      header: { 'content-type': 'application/x-www-form-urlencoded' },
+      method: "post",
+      data: "uname=" + this.globalData.weiUser.uname + "&cart=" + JSON.stringify(this.globalData.cart),
+      success: function () {
+        console.log("更新服务器购物车成功")
+      }
+    })
+
   }
 })
