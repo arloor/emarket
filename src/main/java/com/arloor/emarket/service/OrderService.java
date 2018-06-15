@@ -116,7 +116,19 @@ public class OrderService {
 
     @Transactional
     public boolean setYundanComplete(String yundan) {
-        //要做
-        return false;
+        //要做的事，首先 更新包裹状态 然后钱款从admin到seller
+
+        //计算订单总额
+        double total=orderMapper.selectCountTotalPriceByYundan(yundan);
+        //找到运单对应的商家
+        String sellerName=orderMapper.selectSellerNameByYundan(yundan);
+        int num=orderMapper.updateYundanStatusAsComplete(yundan);
+        if(num==0){
+            return false;
+        }else{
+            orderMapper.addBalanceForEuser("admin",-total);
+            orderMapper.addBalanceForEuser(sellerName,total);
+        }
+        return true;
     }
 }

@@ -15,6 +15,9 @@
     <update id="addBalanceForEuser">
         update user set balance=balance+#{change} where uname=#{uname};
     </update>
+    <update id="updateYundanStatusAsComplete">
+        update orderDetail set yundanStatus="已送达" where yundan=#{yundan};
+    </update>
     <select id="selectYundansByUnameStatus" resultMap="yundanInfoMap">
         select
         distinct orderDetail.yundan
@@ -40,5 +43,11 @@ from `user`
   left join orderDetail on `order`.oid = orderDetail.oid
   left join product on product.pid = orderDetail.pid
 where yundan=#{yundan} order by  time DESC
+    </select>
+    <select id="selectCountTotalPriceByYundan" resultType="java.lang.Double">
+        select sum(price) from orderDetail where yundan=#{yundan};
+    </select>
+    <select id="selectSellerNameByYundan" resultType="java.lang.String">
+        select distinct product.sellerName from orderDetail left join product on product.pid=orderDetail.pid where yundan=#{yundan};
     </select>
 </mapper>

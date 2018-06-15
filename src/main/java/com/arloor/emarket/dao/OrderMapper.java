@@ -19,4 +19,10 @@ public interface OrderMapper {
     List<YundanInfo> selectYundansByUnameStatus(@Param("uname") String uname, @Param("minTime") String minTime, @Param("yundanStatus") String yundanStatus);
 
     List<YundanDetail> selectYundanDetailsByYundan(@Param("yundan") String yundan);
+
+    int updateYundanStatusAsComplete(@Param("yundan")String yundan);
+
+    double selectCountTotalPriceByYundan(@Param("yundan")String yundan);
+
+    String selectSellerNameByYundan(@Param("yundan")String yundan);
 }
