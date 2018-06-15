@@ -15,7 +15,7 @@
     <update id="addBalanceForEuser">
         update user set balance=balance+#{change} where uname=#{uname};
     </update>
-    <select id="selectYundansByUnameStatusPaged" resultMap="yundanInfoMap">
+    <select id="selectYundansByUnameStatus" resultMap="yundanInfoMap">
         select
         distinct orderDetail.yundan
         from `user`
@@ -23,11 +23,12 @@
         left join orderDetail on `order`.oid = orderDetail.oid
         where user.uname = #{uname} and yundanStatus = #{yundanStatus} <if test=" minTime != null">and time > #{minTime}</if>
         order by time DESC
-        limit 0, 5;
+--         limit 0, 5;
     </select>
     <select id="selectYundanDetailsByYundan" resultType="com.arloor.emarket.model.YundanDetail">
 select
   `order`.time,
+  product.pid,
   product.pname,
   product.pinfo,
   product.imageURL,

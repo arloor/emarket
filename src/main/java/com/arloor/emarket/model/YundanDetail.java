@@ -2,12 +2,21 @@ package com.arloor.emarket.model;
 
 public class YundanDetail {
     private String time;
+    private int pid;
     private String pname;
     private String pinfo;
     private String imageURL;
     private int num;
     private double price;
     private String yundanStatus;
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
 
     public String getTime() {
         return time;

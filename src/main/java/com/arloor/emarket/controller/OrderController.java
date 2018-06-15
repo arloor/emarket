@@ -4,7 +4,6 @@ import com.arloor.emarket.dao.ConsigneeMapper;
 import com.arloor.emarket.dao.OrderMapper;
 import com.arloor.emarket.domain.Consignee;
 import com.arloor.emarket.model.NewOrderResult;
-import com.arloor.emarket.model.ProductDetail;
 import com.arloor.emarket.model.ProductDetailWithNum;
 import com.arloor.emarket.model.YundanInfo;
 import com.arloor.emarket.service.OrderService;
@@ -66,6 +65,6 @@ public class OrderController {
             @RequestParam("uname") String uname,
             @RequestParam(value = "minTime",required = false)String minTime,
             @RequestParam("yundanStatus") String yundanStatus){
-        return orderMapper.selectYundansByUnameStatusPaged(uname,minTime,yundanStatus);
+        return orderMapper.selectYundansByUnameStatus(uname,minTime,yundanStatus);
     }
 }

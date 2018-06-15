@@ -76,4 +76,18 @@ Page({
       duration: 1000
     });
   },
+  //预览商品图片
+  previewImage: function (e) {
+    var src = e.target.dataset.src;
+    var srcArray = new Array(src);
+    console.log(e);
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: srcArray // 需要预览的图片http链接列表
+    })
+    return false;
+  },
+  yundanComplete:function(e){
+    console.log("确认到达：",e.target.dataset.yundan);
+  }
 });

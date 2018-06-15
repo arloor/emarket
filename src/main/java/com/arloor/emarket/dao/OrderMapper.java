@@ -16,7 +16,7 @@ public interface OrderMapper {
 
     void addBalanceForEuser(@Param("uname")String uname, @Param("change")double chanege);
 
-    List<YundanInfo> selectYundansByUnameStatusPaged(@Param("uname") String uname,@Param("minTime") String minTime,@Param("yundanStatus") String yundanStatus);
+    List<YundanInfo> selectYundansByUnameStatus(@Param("uname") String uname, @Param("minTime") String minTime, @Param("yundanStatus") String yundanStatus);
 
     List<YundanDetail> selectYundanDetailsByYundan(@Param("yundan") String yundan);
 }

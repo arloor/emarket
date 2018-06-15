@@ -18,9 +18,9 @@
               <view class="weui-panel__hd" hidden="{{activeIndex == 0}}">运单号：{{yundan.yundan}}</view>
               <view class="weui-panel__bd">
 
-                <navigator wx:for="{{yundan.yundanDetailList}}"  wx:for-item="product" wx:key="pname" url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{yundan.yundanDetailList}}" wx:for-item="product" wx:key="pname" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                   <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                    <image class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                    <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
                   </view>
                   <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <view class="weui-media-box__title">{{product.pname}}</view>
@@ -42,16 +42,38 @@
 
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-        
-        
+
+
           <view class="page__bd">
             <view class="weui-panel weui-panel_access" wx:for="{{transportYundans}}" wx:key="yundan" wx:for-item="yundan">
-              <view class="weui-panel__hd" >运单号：{{yundan.yundan}}</view>
+              <!-- <view class="weui-panel__hd" >运单号：{{yundan.yundan}}
+                <view style="display:inline;color:green;font-size=50rpx;" >确认送达</view>
+              </view> -->
+
+
+              <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_input weui-cell_vcode">
+                  <view class="weui-cell__hd">
+                    <view class="weui-label">运单号</view>
+                  </view>
+
+
+                  <view class="weui-cell__bd">
+                    {{yundan.yundan}}
+                  </view>
+
+                  <view class="weui-cell__ft">
+                    <view class="weui-vcode-btn" data-yundan='{{yundan.yundan}}' catchtap='yundanComplete'>确认收货</view>
+                  </view>
+                </view>
+              </view>
+
+
               <view class="weui-panel__bd">
 
-                <navigator wx:for="{{yundan.yundanDetailList}}"  wx:for-item="product" wx:key="pname" url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{yundan.yundanDetailList}}" wx:for="{{yundan.yundanDetailList}}" wx:for-item="product" wx:key="pname" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                   <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                    <image class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                    <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
                   </view>
                   <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <view class="weui-media-box__title">{{product.pname}}</view>
@@ -60,12 +82,6 @@
                   </view>
                 </navigator>
 
-              </view>
-              <view class="weui-panel__ft" >
-                <view class="weui-cell weui-cell_access weui-cell_link">
-                  <view class="weui-cell__bd">查看更多</view>
-                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </view>
               </view>
             </view>
           </view>
@@ -74,15 +90,30 @@
 
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-        
-        <view class="page__bd">
+
+          <view class="page__bd">
             <view class="weui-panel weui-panel_access" wx:for="{{completeYundans}}" wx:key="yundan" wx:for-item="yundan">
-              <view class="weui-panel__hd" >运单号：{{yundan.yundan}}</view>
+              <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_input weui-cell_vcode">
+                  <view class="weui-cell__hd">
+                    <view class="weui-label">运单号</view>
+                  </view>
+
+
+                  <view class="weui-cell__bd">
+                    {{yundan.yundan}}
+                  </view>
+
+                  <view class="weui-cell__ft">
+                    <view class="weui-vcode-btn"></view>
+                  </view>
+                </view>
+              </view>
               <view class="weui-panel__bd">
 
-                <navigator wx:for="{{yundan.yundanDetailList}}"  wx:for-item="product" wx:key="pname" url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{yundan.yundanDetailList}}" wx:for="{{yundan.yundanDetailList}}" wx:for-item="product" wx:key="pname" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                   <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                    <image class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                    <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
                   </view>
                   <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <view class="weui-media-box__title">{{product.pname}}</view>
@@ -92,12 +123,7 @@
                 </navigator>
 
               </view>
-              <view class="weui-panel__ft" >
-                <view class="weui-cell weui-cell_access weui-cell_link">
-                  <view class="weui-cell__bd">查看更多</view>
-                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </view>
-              </view>
+
             </view>
           </view>
 
