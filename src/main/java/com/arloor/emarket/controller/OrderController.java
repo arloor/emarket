@@ -7,6 +7,7 @@ import com.arloor.emarket.model.NewOrderResult;
 import com.arloor.emarket.model.ProductDetailWithNum;
 import com.arloor.emarket.model.YundanInfo;
 import com.arloor.emarket.service.OrderService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,19 @@ public class OrderController {
             @RequestParam(value = "minTime",required = false)String minTime,
             @RequestParam("yundanStatus") String yundanStatus){
         return orderMapper.selectYundansByUnameStatus(uname,minTime,yundanStatus);
+    }
+
+    @RequestMapping("/setYundanComplete")
+    public boolean setYundanComplete(@RequestParam String yundan){
+        boolean result=false;
+
+        try {
+            result =orderService.setYundanComplete(yundan);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.info("设置运单完成失败，数据库回滚");
+            return false;
+        }
+        return result;
     }
 }

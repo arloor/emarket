@@ -88,7 +88,7 @@ Page({
     return false;
   },
   yundanComplete: function (e) {
-    var that=this
+    var theThat=this
     wx.showModal({
       title: '确认收货',
       content: '确认收货，货款将进入卖家账户',
@@ -98,31 +98,53 @@ Page({
         console.log(res);
         if (res.confirm) {
           console.log('用户确认确认收货')
+          var that = theThat;
 
-          console.log("确认到达：", e.target.dataset.yundan);
-          for (var i = 0; i < that.data.transportYundans.length; i++) {
-            var tempCompleteYundans = that.data.completeYundans;
-            var tempTransportYundans = [];
-            var tempYundan = {}
-            if (that.data.transportYundans[i].yundan == e.target.dataset.yundan) {
-              //标记为已送达的订单
-              tempYundan.yundan = e.target.dataset.yundan;
-              tempYundan.yundanDetailList = [];
-              for (var j = 0; j < that.data.transportYundans[i].yundanDetailList.length; j++) {
-                that.data.transportYundans[i].yundanDetailList[j].yundanStatus = "已送达"
-                tempYundan.yundanDetailList.push(that.data.transportYundans[i].yundanDetailList[j]);
+          wx.request({
+            url: app.apiURL + '/order/setYundanComplete?yundan=' + e.target.dataset.yundan,
+            success:function(res){
+              console.log("服务器更新包裹为已送达的结果：", res.data);
+              if(res.data==true){
+                console.log("确认到达：", e.target.dataset.yundan);
+                for (var i = 0; i < that.data.transportYundans.length; i++) {
+                  var tempCompleteYundans = that.data.completeYundans;
+                  var tempTransportYundans = [];
+                  var tempYundan = {}
+                  if (that.data.transportYundans[i].yundan == e.target.dataset.yundan) {
+                    //标记为已送达的订单
+                    tempYundan.yundan = e.target.dataset.yundan;
+                    tempYundan.yundanDetailList = [];
+                    for (var j = 0; j < that.data.transportYundans[i].yundanDetailList.length; j++) {
+                      that.data.transportYundans[i].yundanDetailList[j].yundanStatus = "已送达"
+                      tempYundan.yundanDetailList.push(that.data.transportYundans[i].yundanDetailList[j]);
+                    }
+                    tempCompleteYundans.push(tempYundan);
+                  } else {//未送达的订单
+                    tempTransportYundans.push(that.data.transportYundans[i]);
+                  }
+                }
+                that.setData({
+                  completeYundans: tempCompleteYundans,
+                  transportYundans: tempTransportYundans
+                })
+                wx.showToast({
+                  title: '确认收货成功',
+                  duration:1000
+                })
+              }else{//数据库更新包裹为已送达失败
+                wx.showModal({
+                  content: '确认收获失败，我也不知道怎么会失败。这条信息应该不会出现才对',
+                  showCancel: false,
+                  success: function (res) {
+                    if (res.confirm) {
+                      console.log('用户点击确定')
+                    }
+                  }
+                });
               }
-              tempCompleteYundans.push(tempYundan);
-            } else {//未送达的订单
-              tempTransportYundans.push(that.data.transportYundans[i]);
             }
-          }
-          that.setData({
-            completeYundans: tempCompleteYundans,
-            transportYundans: tempTransportYundans
           })
 
-          //下面要更新相应的运单的数据库
 
 
 

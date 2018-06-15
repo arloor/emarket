@@ -115,4 +115,8 @@ public class OrderService {
     }
 
 
+    public boolean setYundanComplete(String yundan) {
+
+        return false;
+    }
 }
