@@ -11,9 +11,98 @@
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
       </view>
       <view class="weui-tab__panel">
-        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">选项一的内容</view>
-        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">选项二的内容</view>
-        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">选项三的内容</view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+
+          <view class="page__bd">
+            <view class="weui-panel weui-panel_access" wx:for="{{waitYundans}}" wx:key="yundan" wx:for-item="yundan">
+              <view class="weui-panel__hd" hidden="{{activeIndex == 0}}">运单号：{{yundan.yundan}}</view>
+              <view class="weui-panel__bd">
+
+                <navigator wx:for="{{yundan.yundanDetailList}}"  wx:for-item="product" wx:key="pname" url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                    <image class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                  </view>
+                  <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                    <view class="weui-media-box__title">{{product.pname}}</view>
+                    <view class="weui-media-box__desc">数量{{product.num}} 金额￥{{product.price}} </view>
+                    <view class="weui-media-box__desc">{{product.time}}</view>
+                  </view>
+                </navigator>
+
+              </view>
+              <view class="weui-panel__ft" hidden="{{activeIndex == 0}}">
+                <view class="weui-cell weui-cell_access weui-cell_link">
+                  <view class="weui-cell__bd">查看更多</view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+        
+        
+          <view class="page__bd">
+            <view class="weui-panel weui-panel_access" wx:for="{{transportYundans}}" wx:key="yundan" wx:for-item="yundan">
+              <view class="weui-panel__hd" >运单号：{{yundan.yundan}}</view>
+              <view class="weui-panel__bd">
+
+                <navigator wx:for="{{yundan.yundanDetailList}}"  wx:for-item="product" wx:key="pname" url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                    <image class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                  </view>
+                  <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                    <view class="weui-media-box__title">{{product.pname}}</view>
+                    <view class="weui-media-box__desc">数量{{product.num}} 金额￥{{product.price}} </view>
+                    <view class="weui-media-box__desc">{{product.time}}</view>
+                  </view>
+                </navigator>
+
+              </view>
+              <view class="weui-panel__ft" >
+                <view class="weui-cell weui-cell_access weui-cell_link">
+                  <view class="weui-cell__bd">查看更多</view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+
+
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+        
+        <view class="page__bd">
+            <view class="weui-panel weui-panel_access" wx:for="{{completeYundans}}" wx:key="yundan" wx:for-item="yundan">
+              <view class="weui-panel__hd" >运单号：{{yundan.yundan}}</view>
+              <view class="weui-panel__bd">
+
+                <navigator wx:for="{{yundan.yundanDetailList}}"  wx:for-item="product" wx:key="pname" url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                    <image class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                  </view>
+                  <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                    <view class="weui-media-box__title">{{product.pname}}</view>
+                    <view class="weui-media-box__desc">数量{{product.num}} 金额￥{{product.price}} </view>
+                    <view class="weui-media-box__desc">{{product.time}}</view>
+                  </view>
+                </navigator>
+
+              </view>
+              <view class="weui-panel__ft" >
+                <view class="weui-cell weui-cell_access weui-cell_link">
+                  <view class="weui-cell__bd">查看更多</view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+
+
+        </view>
       </view>
     </view>
   </view>

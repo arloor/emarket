@@ -9,6 +9,9 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
     role: "ROLE_MEMBER",
+    waitYundans:[],
+    transportYundans:[],
+    completeYundans:[]
   },
   onLoad: function () {
     this.openLoading();
@@ -27,6 +30,35 @@ Page({
         });
       }
     });
+
+    //获取运单信息（待发货、正在运输、已送达
+    wx.request({
+      url: app.apiURL +'/order/getYundans?uname='+app.globalData.weiUser.uname+'&yundanStatus=待发货',
+      success:function(res){
+        that.setData({
+          waitYundans:res.data
+        })
+        console.log("待发包裹", that.data.waitYundans);
+      }
+    })
+    wx.request({
+      url: app.apiURL + '/order/getYundans?uname=' + app.globalData.weiUser.uname + '&yundanStatus=正在运送',
+      success: function (res) {
+        that.setData({
+          transportYundans: res.data
+        })
+        console.log("在途包裹", that.data.transportYundans);
+      }
+    })
+    wx.request({
+      url: app.apiURL + '/order/getYundans?uname=' + app.globalData.weiUser.uname + '&yundanStatus=已送达',
+      success: function (res) {
+        that.setData({
+          completeYundans: res.data
+        })
+        console.log("已达包裹", that.data.completeYundans);
+      }
+    })
   },
 
   //点击tab
