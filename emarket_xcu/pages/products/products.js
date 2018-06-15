@@ -161,14 +161,14 @@ Page({
     wx.showToast({
       title: '数据加载中',
       icon: 'loading',
-      duration: 500
+      duration: 1000
     });
   },
   openLongLoading: function () {
     wx.showToast({
       title: '数据加载中',
       icon: 'loading',
-      duration: 1000
+      duration: 2000
     });
   },
   /**
