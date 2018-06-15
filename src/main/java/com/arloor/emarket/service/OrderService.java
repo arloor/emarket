@@ -1,8 +1,10 @@
 package com.arloor.emarket.service;
 
 import com.arloor.emarket.dao.EuserMapper;
+import com.arloor.emarket.dao.OrderMapper;
 import com.arloor.emarket.dao.ProductMapper;
 import com.arloor.emarket.domain.Euser;
+import com.arloor.emarket.domain.Order;
 import com.arloor.emarket.domain.Product;
 import com.arloor.emarket.model.NewOrderResult;
 import com.arloor.emarket.model.ProductDetailWithNum;
@@ -21,6 +23,8 @@ public class OrderService {
     EuserMapper euserMapper;
     @Autowired
     ProductMapper productMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Transactional
     public NewOrderResult newOrder(List<ProductDetailWithNum> products, String uname, double total, String paykey) {
@@ -68,7 +72,15 @@ public class OrderService {
 
         //下面记录订单信息
         //首先是order表，然后是orderDetail表
+        Order order=new Order();
+        order.setTotal(trueTotal);
+        order.setUname(uname);
+        orderMapper.insertOrder(order);//在这里通过mybaits获得了自增主键oid
 
+
+
+
+        //还没写好，先让一切数据库操作都回滚
         throw new RuntimeException("数据库回滚");
     }
 }
