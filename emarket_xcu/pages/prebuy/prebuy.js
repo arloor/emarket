@@ -9,16 +9,26 @@ Page({
   data: {
     total: 0,
     products: [],
-    showPaykey:false
+    consignee: null,
+    paykey:null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this;
+    wx.request({
+      url: app.apiURL + '/order/getConsignee?uname='+app.globalData.weiUser.uname,
+      success:function(res){
+        that.setData({
+          consignee:res.data
+        })
+        console.log( "从服务器获得的用户收获人信息：",res.data)
+      }
+    })
     console.log(options);
     if (options.pid != undefined) {//由单个商品详情页面转入
-      var that = this;
       wx.request({
         url: app.apiURL + '/product/productDetail?pid=' + options.pid,
         success: function (res) {
@@ -46,21 +56,86 @@ Page({
       })
     }
   },
-  checkPaykey:function(){
+  checkConsignee: function (e) {
+    console.log("表单的值：",e.detail.value)
+    //检查非空
+    for (var name in e.detail.value) {
+      if (e.detail.value[name] == "") {
+        wx.showModal({
+          content: '请完整填写信息',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            }
+          }
+        });
+        return false;
+      }
+    }
+    //设置收货人信息
+    var varConsignee = {};
+    varConsignee.uname = app.globalData.weiUser.uname
+    varConsignee.consignee = e.detail.value.consignee
+    varConsignee.tel = e.detail.value.tel
+    varConsignee.addr = e.detail.value.addr
+    varConsignee.zipcode = e.detail.value.zipcode
     this.setData({
-      showPaykey:true
+      consignee: varConsignee,
+      paykey: e.detail.value.paykey
     })
-  },
-  order: function (e) {
+
+    var that=this
     wx.request({
-      url: app.apiURL + '/order/new?total=' + this.data.total + '&uname=' + app.globalData.weiUser.uname + '&paykey='+e.detail.value.paykey,
+      url: app.apiURL + '/order/updateConsignee',
       header: { 'content-type': 'application/json' },
       method: "post",
-      data:this.data.products,
-      success:function(res){
-        console.log(res)
+      data: this.data.consignee,
+      success: function () {
+        var thatthat=that
+        wx.showModal({
+          title: '确认收货人信息',
+          content: that.data.consignee.consignee + "  " + that.data.consignee.tel + "  " + that.data.consignee.addr,
+          confirmText: "确认",
+          cancelText: "修改",
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户确认收货人信息，开始下单')
+              wx.request({
+                url: app.apiURL + '/order/new?total=' + thatthat.data.total + '&uname=' + app.globalData.weiUser.uname + '&paykey=' + thatthat.data.paykey,
+                header: { 'content-type': 'application/json' },
+                method: "post",
+                data: thatthat.data.products,
+                success: function (res) {
+                  console.log("下单结果",res.data)
+                  if(res.data.errCode=="fail"){
+                    wx.showModal({
+                      content: "下单失败    "+res.data.errMsg,
+                      showCancel: false,
+                      success: function (res) {
+                        if (res.confirm) {
+                          console.log('用户确定下单失败结果')
+                        }
+                      }
+                    });
+                  }
+                }
+              })
+
+            } else {
+              console.log('用户点击修改收货人信息')
+            }
+          }
+        });
       }
+
     })
+
+
+
+  },
+  order: function (e) {
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

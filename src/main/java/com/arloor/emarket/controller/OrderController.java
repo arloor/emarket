@@ -1,5 +1,7 @@
 package com.arloor.emarket.controller;
 
+import com.arloor.emarket.dao.ConsigneeMapper;
+import com.arloor.emarket.domain.Consignee;
 import com.arloor.emarket.model.NewOrderResult;
 import com.arloor.emarket.model.ProductDetail;
 import com.arloor.emarket.model.ProductDetailWithNum;
@@ -19,6 +21,8 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OrderService orderService;
+    @Autowired
+    ConsigneeMapper consigneeMapper;
 
     Logger logger=LoggerFactory.getLogger(OrderController.class);
 
@@ -39,5 +43,18 @@ public class OrderController {
         }
 
         return newOrderResult;
+    }
+
+    @RequestMapping("/getConsignee")
+    public Consignee getConsigneeByuname(@RequestParam String uname){
+        return consigneeMapper.selectConsigneeByUname(uname);
+    }
+
+    @RequestMapping("/updateConsignee")
+    public void upDateConsignee(@RequestBody Consignee consignee){
+        int numUpdate= consigneeMapper.updateConsignee(consignee);
+        if(numUpdate==0){
+            consigneeMapper.insertConsignee(consignee);
+        }
     }
 }
