@@ -59,6 +59,9 @@ public class OrderService {
             int num=productDetailWithNum.getNum();
             int pid=productDetailWithNum.getPid();
             Product trueProduct=productMapper.selectByPrimaryKey(pid);
+            if(productDetailWithNum.getNum()==0){//个数为0的商品不加入订单
+                iterator.remove();
+            }
             if(trueProduct.getInventory()<num){//如果库存不足
                 noEnoughInventoryPnameList.add(productDetailWithNum.getPname());
                 iterator.remove();
@@ -98,7 +101,7 @@ public class OrderService {
         orderResult.setErrCode("OK");
 
         StringBuffer sb=new StringBuffer();
-        sb.append("下单成功，实际支出："+trueTotal+"元");
+        sb.append("实际支出："+trueTotal+"元");
         if(!noEnoughInventoryPnameList.isEmpty()){
             sb.append(" \r\n因为库存原因未能购买的商品有: ");
             for (String pname:noEnoughInventoryPnameList

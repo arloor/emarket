@@ -117,15 +117,17 @@ Page({
                       content: "下单成功    "+res.data.errMsg,
                       showCancel: false,
                       success: function (res) {
-                        
-                        if (res.confirm) {
-                          console.log('用户确定下单成功')
-                          
-                        }
-                        if (thatthatthat.data.cart==true){
+                        if (thatthatthat.data.cart == true) {
                           console.log('清空购物车信息')
                           app.globalData.cart = {};
                         }
+                        if (res.confirm) {
+                          console.log('用户确定下单成功')
+                          wx.reLaunch({
+                            url: '/pages/index/index',
+                          })
+                        }
+                        
                       }
                     });
                   }else{
