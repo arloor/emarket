@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.arloor.emarket.dao.OrderMapper">
+    <resultMap id="yundanInfoMap" type="com.arloor.emarket.model.YundanInfo">
+        <id property="yundan" column="yundan"/>
+        <collection property="yundanDetailList" select="com.arloor.emarket.dao.OrderMapper.selectYundanDetailsByYundan" column="yundan"/>
+    </resultMap>
 
     <insert id="insertOrder" keyProperty="oid" useGeneratedKeys="true">
         insert into `order`(uname, total) value ( #{uname},#{total});
@@ -11,4 +15,29 @@
     <update id="addBalanceForEuser">
         update user set balance=balance+#{change} where uname=#{uname};
     </update>
+    <select id="selectYundansByUnameStatusPaged" resultMap="yundanInfoMap">
+        select
+        distinct orderDetail.yundan
+        from `user`
+        left join `order` on user.uname = `order`.uname
+        left join orderDetail on `order`.oid = orderDetail.oid
+        where user.uname = #{uname} and yundanStatus = #{yundanStatus} <if test=" minTime != null">and time > #{minTime}</if>
+        order by time DESC
+        limit 0, 5;
+    </select>
+    <select id="selectYundanDetailsByYundan" resultType="com.arloor.emarket.model.YundanDetail">
+select
+  `order`.time,
+  product.pname,
+  product.pinfo,
+  product.imageURL,
+  orderDetail.num,
+  orderDetail.price,
+  orderDetail.yundanStatus
+from `user`
+  left join  `order` on user.uname = `order`.uname
+  left join orderDetail on `order`.oid = orderDetail.oid
+  left join product on product.pid = orderDetail.pid
+where yundan=#{yundan} order by  time DESC
+    </select>
 </mapper>

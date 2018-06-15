@@ -28,10 +28,12 @@ Page({
     inputVal:""
   },
   //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '/pages/home/home'
-    })
+  enterHome: function () {
+    if(this.data.weiUser.role=="ROLE_MEMBER"){
+      wx.navigateTo({
+        url: '/pages/home/home'
+      })
+    }
   },
   onLoad: function () {
     var that = this;

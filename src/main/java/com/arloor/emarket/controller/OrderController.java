@@ -1,10 +1,12 @@
 package com.arloor.emarket.controller;
 
 import com.arloor.emarket.dao.ConsigneeMapper;
+import com.arloor.emarket.dao.OrderMapper;
 import com.arloor.emarket.domain.Consignee;
 import com.arloor.emarket.model.NewOrderResult;
 import com.arloor.emarket.model.ProductDetail;
 import com.arloor.emarket.model.ProductDetailWithNum;
+import com.arloor.emarket.model.YundanInfo;
 import com.arloor.emarket.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,8 @@ public class OrderController {
     OrderService orderService;
     @Autowired
     ConsigneeMapper consigneeMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     Logger logger=LoggerFactory.getLogger(OrderController.class);
 
@@ -55,5 +59,13 @@ public class OrderController {
         if(numUpdate==0){
             consigneeMapper.insertConsignee(consignee);
         }
+    }
+
+    @RequestMapping("/getYundans")
+    public List<YundanInfo> getYundansByYundanStatus(
+            @RequestParam("uname") String uname,
+            @RequestParam(value = "minTime",required = false)String minTime,
+            @RequestParam("yundanStatus") String yundanStatus){
+        return orderMapper.selectYundansByUnameStatusPaged(uname,minTime,yundanStatus);
     }
 }

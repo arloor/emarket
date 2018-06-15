@@ -6,7 +6,7 @@
     <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="weui-btn mini-btn" type="primary">登陆雍物集</button>
   </view>
   <block wx:else>
-    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{weiUser.avatarUrl}}" background-size="cover"></image>
+    <image bindtap="enterHome" class="userinfo-avatar" src="{{weiUser.avatarUrl}}" background-size="cover"></image>
     <text class="userinfo-nickname">{{weiUser.nickName}}</text>
     <view style='display:inline;color:#FF0000' bindtap='cancelBind'>注销</view>
   </block>
