@@ -10,7 +10,7 @@ Target Server Type    : MariaDB
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-06-12 19:57:31
+Date: 2018-06-15 11:06:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,13 +40,13 @@ CREATE TABLE `consignee` (
   `consignee` varchar(30) NOT NULL,
   `tel` varchar(15) NOT NULL,
   `zipcode` varchar(15) NOT NULL,
-  `isDefault` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`uname`,`addr`)
+  PRIMARY KEY (`uname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of consignee
 -- ----------------------------
+INSERT INTO `consignee` VALUES ('moontell', '汉口路22号', '刘港欢', '18762832143', '210000');
 
 -- ----------------------------
 -- Table structure for order
@@ -54,9 +54,9 @@ CREATE TABLE `consignee` (
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `oid` int(11) NOT NULL AUTO_INCREMENT COMMENT '''已支付、未支付、正在运送、完成''',
-  `uname` varchar(30) DEFAULT NULL,
-  `orderStatus` varchar(30) DEFAULT NULL,
-  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `uname` varchar(30) NOT NULL,
+  `orderStatus` varchar(30) NOT NULL DEFAULT 'paid',
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `total` double(10,2) DEFAULT NULL,
   PRIMARY KEY (`oid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -70,13 +70,13 @@ CREATE TABLE `order` (
 -- ----------------------------
 DROP TABLE IF EXISTS `orderDetail`;
 CREATE TABLE `orderDetail` (
-  `yundan` varchar(30) NOT NULL,
+  `yundan` varchar(30) NOT NULL DEFAULT '',
   `pid` int(30) NOT NULL,
   `oid` int(30) NOT NULL,
   `num` int(10) DEFAULT NULL,
   `price` double(10,2) DEFAULT NULL,
   `yundanStatus` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`yundan`,`pid`)
+  PRIMARY KEY (`pid`,`oid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -180,5 +180,5 @@ CREATE TABLE `weuname` (
 -- ----------------------------
 -- Records of weuname
 -- ----------------------------
-INSERT INTO `weuname` VALUES ('o9YQ65Gne9YDl4Fr_ftyp8joLPrk', 'nywc', 'https://wx.qlogo.cn/mmopen/vi_32/wYRibk2mdo1CyLbXBgFvIkfBw8c16J3Z8TsqQ2ibBC5Saotjwuprm1jvYzsiaFk8S6zvceuqMT5Vb9KkAmB76beZg/132');
+INSERT INTO `weuname` VALUES ('o9YQ65Gne9YDl4Fr_ftyp8joLPrk', 'moontell', 'https://wx.qlogo.cn/mmopen/vi_32/wYRibk2mdo1CyLbXBgFvIkfBw8c16J3Z8TsqQ2ibBC5Saotjwuprm1jvYzsiaFk8S6zvceuqMT5Vb9KkAmB76beZg/132');
 SET FOREIGN_KEY_CHECKS=1;

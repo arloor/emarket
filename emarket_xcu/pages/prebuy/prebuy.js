@@ -57,7 +57,7 @@ Page({
     }
   },
   checkConsignee: function (e) {
-    console.log("表单的值：",e.detail.value)
+    console.log("用户点击付款，表单的值：",e.detail.value)
     //检查非空
     for (var name in e.detail.value) {
       if (e.detail.value[name] == "") {
