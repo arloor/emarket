@@ -114,9 +114,9 @@ public class OrderService {
         return orderResult;
     }
 
-
+    @Transactional
     public boolean setYundanComplete(String yundan) {
-
+        //要做
         return false;
     }
 }

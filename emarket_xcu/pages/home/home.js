@@ -133,7 +133,7 @@ Page({
                 })
               }else{//数据库更新包裹为已送达失败
                 wx.showModal({
-                  content: '确认收获失败，我也不知道怎么会失败。这条信息应该不会出现才对',
+                  content: '确认收货失败，数据库事务发生回滚。应该不会看到这条信息的:)',
                   showCancel: false,
                   success: function (res) {
                     if (res.confirm) {
