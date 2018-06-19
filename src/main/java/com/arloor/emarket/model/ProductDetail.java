@@ -5,10 +5,29 @@ public class ProductDetail {
     private String imageURL;
     private String pname;
     private String pinfo;
+    private String tag;
     private String sellerName;
     private String sellerNickName;
     private Double price;
+    private Double oldPrice;
     private Integer inventory;
+
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public Double getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(Double oldPrice) {
+        this.oldPrice = oldPrice;
+    }
 
     public Integer getPid() {
         return pid;

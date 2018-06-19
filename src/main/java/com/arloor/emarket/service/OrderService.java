@@ -5,7 +5,7 @@ import com.arloor.emarket.domain.Consignee;
 import com.arloor.emarket.domain.Euser;
 import com.arloor.emarket.domain.Order;
 import com.arloor.emarket.domain.Product;
-import com.arloor.emarket.model.NewOrderResult;
+import com.arloor.emarket.model.Result;
 import com.arloor.emarket.model.ProductDetailWithNum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,22 +32,22 @@ public class OrderService {
     ConsigneeMapper consigneeMapper;
 
     @Transactional
-    public NewOrderResult newOrder(List<ProductDetailWithNum> products, String uname, double total, String paykey) {
-        NewOrderResult orderResult=null;
+    public Result newOrder(List<ProductDetailWithNum> products, String uname, double total, String paykey) {
+        Result result =null;
         //首先要判断支付密码是否正确
         Euser euser=euserMapper.selectByPrimaryKey(uname);
         if(!euser.getPaykey().equals(paykey)) {
-            orderResult = new NewOrderResult();
-            orderResult.setErrMsg("支付密码错误");
-            orderResult.setErrCode("fail");
-            return orderResult;
+            result = new Result();
+            result.setErrMsg("支付密码错误");
+            result.setErrCode("fail");
+            return result;
         }
         //判断余额是否充足
         if(euser.getBalance()<total){
-            orderResult=new NewOrderResult();
-            orderResult.setErrMsg("余额不足");
-            orderResult.setErrCode("fail");
-            return orderResult;
+            result =new Result();
+            result.setErrMsg("余额不足");
+            result.setErrCode("fail");
+            return result;
         }
 
         //库存不足的商品pid列表
@@ -108,8 +108,8 @@ public class OrderService {
 
 
         //完成了一切
-        orderResult=new NewOrderResult();
-        orderResult.setErrCode("OK");
+        result =new Result();
+        result.setErrCode("OK");
 
         StringBuffer sb=new StringBuffer();
         sb.append("实际支出："+trueTotal+"元");
@@ -120,9 +120,9 @@ public class OrderService {
                 sb.append(pname+" ");
             }
         }
-        orderResult.setErrMsg(sb.toString());
+        result.setErrMsg(sb.toString());
 
-        return orderResult;
+        return result;
     }
 
     @Transactional
@@ -141,5 +141,24 @@ public class OrderService {
             orderMapper.addBalanceForEuser(sellerName,total);
         }
         return true;
+    }
+
+    @Transactional
+    public Result fahuo(String oid, String sellerName) {
+        String yundan=oid+sellerName;
+
+        int numRows=orderMapper.updateOrderDetailSetFahuo(oid,yundan,sellerName);
+
+        if(numRows>0){
+            Result result =new Result();
+            result.setErrCode("OK");
+            result.setErrMsg("发货成功，运单号为: "+yundan);
+            return result;
+        }else{
+            Result result =new Result();
+            result.setErrCode("FAIL");
+            result.setErrMsg("发货失败");
+            return result;
+        }
     }
 }

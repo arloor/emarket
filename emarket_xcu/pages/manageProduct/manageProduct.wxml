@@ -1,0 +1,70 @@
+<!--pages/manageProduct/manageProduct.wxml-->
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <form bindsubmit="modify" bindreset="formReset" report-submit='true'>
+
+    <view class="weui-cells__title">修改商品信息</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">商品名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="pname" value='{{product.pname}}' placeholder="请输入商品名" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">分类</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange="bindPickerChange" value="{{pickIndex}}" range="{{tagNames}}">
+            <button type="default" style='background-color: #FFFFFF;'>{{tagNames[pickIndex]}}</button>
+          </picker>
+        </view>
+      </view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" name="pinfo" value='{{product.pinfo}}' placeholder="请输入商品介绍" style="height: 3.3em" />
+            <!-- <view class="weui-textarea-counter">0/200</view> -->
+          </view>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">库存</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="inventory" value='{{product.inventory}}' placeholder="请输入库存" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">现价</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="price" value='{{product.price}}' placeholder="请输入现价" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">原价</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="oldPrice" value='{{product.oldPrice}}' placeholder="请输入现价" />
+        </view>
+      </view>
+          <view style='display: flex;justify-content: center;align-items: center;'>
+      <image mode="aspectFill" bindtap='previewImage' src="{{product.imageURL}}"></image>
+    </view>
+
+    </view>
+    <view class="weui-btn-area">
+      <button class="weui-btn" formType="submit" type="primary">确定修改</button>
+    </view>
+  </form>
+</view>

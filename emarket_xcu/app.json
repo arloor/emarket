@@ -8,7 +8,8 @@
     "pages/productDetail/productDetail",
     "pages/cart/cart",
     "pages/prebuy/prebuy",
-    "pages/sellerHome/sellerHome"
+    "pages/sellerHome/sellerHome",
+    "pages/manageProduct/manageProduct"
   ],
   "window": {
     "backgroundTextStyle": "light",

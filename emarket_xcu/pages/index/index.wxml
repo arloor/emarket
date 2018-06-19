@@ -14,6 +14,7 @@
 
 <!--SELLER对应的上传商品区域  -->
 <view wx:if="{{weiUser.role == 'ROLE_SELLER'}}">
+
   <form bindsubmit="upload" bindreset="formReset" report-submit='true'>
     <view class="weui-cells__title">发布到雍物集</view>
     <view class="weui-cells weui-cells_after-title">
@@ -68,7 +69,7 @@
           <view class="weui-label">原价</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" name="oldPrice" placeholder="请输入原件" />
+          <input class="weui-input" name="oldPrice" placeholder="请输入原价" />
         </view>
       </view>
 

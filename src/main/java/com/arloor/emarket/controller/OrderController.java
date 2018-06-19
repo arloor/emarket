@@ -4,11 +4,10 @@ import com.arloor.emarket.dao.ConsigneeMapper;
 import com.arloor.emarket.dao.OrderMapper;
 import com.arloor.emarket.domain.Consignee;
 import com.arloor.emarket.model.ForSellerOrderInfo;
-import com.arloor.emarket.model.NewOrderResult;
+import com.arloor.emarket.model.Result;
 import com.arloor.emarket.model.ProductDetailWithNum;
 import com.arloor.emarket.model.YundanInfo;
 import com.arloor.emarket.service.OrderService;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +32,20 @@ public class OrderController {
 
 
     @RequestMapping("/new")
-    public NewOrderResult newOrder(@RequestBody List<ProductDetailWithNum> products , @RequestParam String uname,@RequestParam double total,@RequestParam String paykey){
-        NewOrderResult newOrderResult=null;
+    public Result newOrder(@RequestBody List<ProductDetailWithNum> products , @RequestParam String uname, @RequestParam double total, @RequestParam String paykey){
+        Result result =null;
         try {
-            newOrderResult=orderService.newOrder(products,uname,total,paykey);
+            result =orderService.newOrder(products,uname,total,paykey);
         }catch (Exception e){
             logger.info(uname+"新建价值“"+total+"”的订单，失败。数据库回滚");
             e.printStackTrace();
-            newOrderResult=new NewOrderResult();
-            newOrderResult.setErrCode("sqlErr");
-            newOrderResult.setErrMsg("交易事务失败，请重试");
-            return newOrderResult;
+            result =new Result();
+            result.setErrCode("sqlErr");
+            result.setErrMsg("交易事务失败，请重试");
+            return result;
         }
 
-        return newOrderResult;
+        return result;
     }
 
     @RequestMapping("/getConsignee")
@@ -91,5 +90,19 @@ public class OrderController {
             @RequestParam("yundanStatus") String yundanStatus){
         return orderMapper.selectSellerOrderInfo(sellerName,yundanStatus);
     }
+
+
+    @RequestMapping("/fahuo")
+    public Result fahuo(@RequestParam String oid, @RequestParam String sellerName){
+        try {
+            return orderService.fahuo(oid,sellerName);
+        }catch (RuntimeException e){
+            Result result =new Result();
+            result.setErrCode("FAIL");
+            result.setErrMsg("发生异常");
+            return result;
+        }
+    }
+
 
 }

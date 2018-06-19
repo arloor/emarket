@@ -18,8 +18,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("页面跳转options", options)
-    console.log("查询商品信息，pid", options.pid);
+    console.log("页面跳转options：", options)
+    console.log("查询商品信息，pid：", options.pid);
     var that = this;
     wx.request({
       url: app.apiURL + '/product/productDetail?pid=' + options.pid,

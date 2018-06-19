@@ -1,6 +1,6 @@
 package com.arloor.emarket.model;
 
-public class NewOrderResult {
+public class Result {
 
     private String errCode;
 

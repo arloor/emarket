@@ -1,7 +1,7 @@
 //app.js
 App({
-  apiURL: "https://api.moontell.cn/api",
-  // apiURL:"https://nywc.moontell.cn/market/api",
+  // apiURL: "https://api.moontell.cn/api",
+  apiURL:"https://nywc.moontell.cn/market/api",
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []

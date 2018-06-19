@@ -13,7 +13,7 @@
       <view class="weui-tab__panel">
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
 
-                   <view wx:for="{{waitOrders}}" class="page" wx:key="oid" wx:for-item="order">
+          <view wx:for="{{waitOrders}}" class="page" wx:key="oid" wx:for-item="order">
 
 
             <view class="weui-cells weui-cells_after-title">
@@ -29,7 +29,7 @@
 
                 <view class="weui-cell__ft">
                   <view class="weui-vcode-btn" data-oid='{{order.oid}}' catchtap='fahuo'>发货</view>
-                  <view class="weui-vcode-btn" data-oid='{{order.oid}}' catchtap='bohui'>驳回</view>
+                  <!-- <view class="weui-vcode-btn" data-oid='{{order.oid}}' catchtap='bohui'>驳回</view> -->
                 </view>
               </view>
             </view>
@@ -39,9 +39,9 @@
               <view class="weui-panel weui-panel_access">
 
                 <view class="weui-panel__bd">
-                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}"  wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                      <image catchtap='previewImage' data-src='{{product.imageURL}}'  class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                      <image catchtap='previewImage' data-src='{{product.imageURL}}' class="weui-media-box__thumb" src="{{product.imageURL}}" />
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                       <view class="weui-media-box__title">{{product.pname}}</view>
@@ -51,7 +51,7 @@
                   </navigator>
                 </view>
 
-                <view class="weui-panel__hd">运单号 {{order.yundan}}</view>
+                <!-- <view class="weui-panel__hd">运单号 {{order.yundan}}</view> -->
                 <view class="weui-panel__hd">收货人 {{order.consignee}}</view>
                 <view class="weui-panel__hd">地址 {{order.addr}}</view>
                 <view class="weui-panel__hd">电话 {{order.tel}}</view>
@@ -85,8 +85,7 @@
                 </view>
 
                 <view class="weui-cell__ft">
-                   <view class="weui-vcode-btn"></view>
-                  <view class="weui-vcode-btn"></view> 
+                  <view class="weui-vcode-btn"></view>
                 </view>
               </view>
             </view>
@@ -96,9 +95,9 @@
               <view class="weui-panel weui-panel_access">
 
                 <view class="weui-panel__bd">
-                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}"  wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                      <image catchtap='previewImage' data-src='{{product.imageURL}}'  class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                      <image catchtap='previewImage' data-src='{{product.imageURL}}' class="weui-media-box__thumb" src="{{product.imageURL}}" />
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                       <view class="weui-media-box__title">{{product.pname}}</view>
@@ -137,8 +136,7 @@
                 </view>
 
                 <view class="weui-cell__ft">
-                   <view class="weui-vcode-btn"></view>
-                  <view class="weui-vcode-btn"></view> 
+                  <view class="weui-vcode-btn"></view>
                 </view>
               </view>
             </view>
@@ -148,9 +146,9 @@
               <view class="weui-panel weui-panel_access">
 
                 <view class="weui-panel__bd">
-                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}"  wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                      <image  catchtap='previewImage' data-src='{{product.imageURL}}'  class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                      <image catchtap='previewImage' data-src='{{product.imageURL}}' class="weui-media-box__thumb" src="{{product.imageURL}}" />
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                       <view class="weui-media-box__title">{{product.pname}}</view>
@@ -173,6 +171,40 @@
 
           </view>
         </view>
+
+
+        <!--管理商品  -->
+        <view class="weui-tab__content" hidden="{{activeIndex != 3}}">
+          <view class="weui-panel__bd">
+
+            <navigator wx:for="{{products}}" wx:key="pid" wx:for-item="product" url="/pages/manageProduct/manageProduct?pid={{product.pid}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+              <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
+              </view>
+              <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title">{{product.pname}}</view>
+                <view class="weui-media-box__desc">
+                  <view> 价格 {{product.price}}</view>
+                  <view>{{product.sellerNickName}}
+                    <view catchtap='enterSeller' wx:if="{{ sellerName == '' }}" style='display:inline;color:#FF0000' data-url='/pages/products/products?sellerName={{product.sellerName}}&sellerNickName={{product.sellerNickName}}'>进入店铺</view>
+                  </view>
+                </view>
+              </view>
+            </navigator>
+          </view>
+          <view wx:if="{{hasMore}}" class="weui-panel__ft" bindtap='viewMore'>
+            <view class="weui-cell weui-cell_access weui-cell_link">
+              <view class="weui-cell__bd">查看更多</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>
+          </view>
+          <view wx:else class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access weui-cell_link">
+              <view class="weui-cell__bd">没有更多啦</view>
+            </view>
+          </view>
+        </view>
+
       </view>
     </view>
   </view>

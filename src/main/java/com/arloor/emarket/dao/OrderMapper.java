@@ -1,10 +1,7 @@
 package com.arloor.emarket.dao;
 
 import com.arloor.emarket.domain.Order;
-import com.arloor.emarket.model.ForSellerOrderInfo;
-import com.arloor.emarket.model.ForSellerYundanInfo;
-import com.arloor.emarket.model.YundanDetail;
-import com.arloor.emarket.model.YundanInfo;
+import com.arloor.emarket.model.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +27,6 @@ public interface OrderMapper {
 
 
     List<ForSellerOrderInfo> selectSellerOrderInfo(@Param("sellerName")String sellerName,@Param("yundanStatus")String yundanStatus);
+
+    int updateOrderDetailSetFahuo(@Param("oid")String oid,@Param("yundan")String yundan,@Param("sellerName")String sellerName);
 }

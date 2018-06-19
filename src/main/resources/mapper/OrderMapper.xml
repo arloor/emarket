@@ -38,6 +38,13 @@
     <update id="updateYundanStatusAsComplete">
         update orderDetail set yundanStatus="已送达" where yundan=#{yundan};
     </update>
+    <update id="updateOrderDetailSetFahuo">
+        update orderDetail
+set yundanStatus = "正在运送", yundan = #{yundan}
+where oid = #{oid} and pid in (select pid
+                           from product
+                           where sellerName = #{sellerName});
+    </update>
     <select id="selectYundansByUnameStatus" resultMap="yundanInfoMap">
         select
         distinct orderDetail.yundan,order.consignee,order.tel,order.addr

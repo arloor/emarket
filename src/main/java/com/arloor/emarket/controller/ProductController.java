@@ -6,6 +6,7 @@ import com.arloor.emarket.domain.Product;
 import com.arloor.emarket.domain.ProductTag;
 import com.arloor.emarket.model.ProductDetail;
 import com.arloor.emarket.model.ProductListCell;
+import com.arloor.emarket.model.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +59,23 @@ public class ProductController {
     @RequestMapping("/productDetail")
     public ProductDetail productDetail(@RequestParam(defaultValue = "10") int pid){
         return productMapper.selectProductDetailByPid(pid);
+    }
+
+    @RequestMapping("/update")
+    public Result updateProduct(@RequestBody Product product){
+        try{
+            productMapper.updateByPrimaryKeySelective(product);
+        }catch (Exception e){
+            Result result=new Result();
+            result.setErrCode("FAIL");
+            result.setErrMsg("数据库异常");
+            return result;
+        }
+        Result result=new Result();
+        result.setErrCode("OK");
+        result.setErrMsg("更新成功");
+        return result;
+
     }
 
 }

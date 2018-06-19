@@ -90,6 +90,8 @@ order by product.pid DESC limit 0,5;
         select
         product.pid,
         product.imageURL,
+        product.tag,
+        product.oldPrice,
         product.pname,
         productTag.tagName,
         product.inventory,
