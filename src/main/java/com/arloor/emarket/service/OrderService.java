@@ -7,6 +7,8 @@ import com.arloor.emarket.domain.Order;
 import com.arloor.emarket.domain.Product;
 import com.arloor.emarket.model.NewOrderResult;
 import com.arloor.emarket.model.ProductDetailWithNum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ import java.util.List;
 
 @Component
 public class OrderService {
+    private Logger logger=LoggerFactory.getLogger(OrderService.class);
+
     @Autowired
     EuserMapper euserMapper;
     @Autowired
@@ -77,12 +81,14 @@ public class OrderService {
         //下面记录订单信息
         //首先是order表，然后是orderDetail表,注意order要加入收货人信息
         Consignee consignee=consigneeMapper.selectConsigneeByUname(uname);
+        logger.info("订单的收货人信息： "+consignee.getConsignee()+" "+consignee.getAddr()+" "+consignee.getTel());
         Order order=new Order();
         order.setTotal(trueTotal);
         order.setUname(uname);
         order.setAddr(consignee.getAddr());
         order.setTel(consignee.getTel());
         order.setConsignee(consignee.getConsignee());
+        order.setZipcode(consignee.getZipcode());
         orderMapper.insertOrder(order);//在这里通过mybaits获得了自增主键oid
         long oid=order.getOid();
 

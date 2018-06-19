@@ -10,7 +10,7 @@
     </resultMap>
 
     <insert id="insertOrder" keyProperty="oid" useGeneratedKeys="true">
-        insert into `order`(uname, total) value ( #{uname},#{total});
+        insert into `order`(uname, total,addr,tel,consignee,zipcode) value ( #{uname},#{total},#{addr},#{tel},#{consignee},#{zipcode});
     </insert>
     <insert id="insertOrderDetail">
         insert into orderDetail(pid,oid,num,price) value(#{pid},#{oid},#{num},#{price})
