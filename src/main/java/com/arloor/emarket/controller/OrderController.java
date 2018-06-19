@@ -3,6 +3,7 @@ package com.arloor.emarket.controller;
 import com.arloor.emarket.dao.ConsigneeMapper;
 import com.arloor.emarket.dao.OrderMapper;
 import com.arloor.emarket.domain.Consignee;
+import com.arloor.emarket.model.ForSellerOrderInfo;
 import com.arloor.emarket.model.NewOrderResult;
 import com.arloor.emarket.model.ProductDetailWithNum;
 import com.arloor.emarket.model.YundanInfo;
@@ -82,4 +83,13 @@ public class OrderController {
         }
         return result;
     }
+
+
+    @RequestMapping("/getSellerOrdersByStatus")
+    public List<ForSellerOrderInfo> getSellerOrdersByStatus(
+            @RequestParam("sellerName") String sellerName,
+            @RequestParam("yundanStatus") String yundanStatus){
+        return orderMapper.selectSellerOrderInfo(sellerName,yundanStatus);
+    }
+
 }

@@ -33,6 +33,10 @@ Page({
       wx.navigateTo({
         url: '/pages/home/home'
       })
+    } else if (this.data.weiUser.role == "ROLE_SELLER"){
+      wx.navigateTo({
+        url: '/pages/sellerHome/sellerHome'
+      })
     }
   },
   onLoad: function () {

@@ -9,6 +9,23 @@
         <collection property="yundanDetailList" select="com.arloor.emarket.dao.OrderMapper.selectYundanDetailsByYundan" column="yundan"/>
     </resultMap>
 
+    <resultMap id="forSellerOrderInfo" type="com.arloor.emarket.model.ForSellerOrderInfo">
+        <id property="oid" column="oid"/>
+        <result property="sellerName" column="sellerName"/>
+        <result property="yundan" column="yundan"/>
+        <result property="time" column="time"/>
+        <result property="addr" column="addr"/>
+        <result property="consignee" column="consignee"/>
+        <result property="tel" column="tel"/>
+        <collection property="yundanInfoList" ofType="com.arloor.emarket.model.ForSellerYundanInfo">
+            <id property="pid" column="pid"/>
+            <result property="pname" column="pname"/>
+            <result property="imageURL" column="imageURL"/>
+            <result property="num" column="num"/>
+            <result property="price" column="price"/>
+        </collection>
+    </resultMap>
+
     <insert id="insertOrder" keyProperty="oid" useGeneratedKeys="true">
         insert into `order`(uname, total,addr,tel,consignee,zipcode) value ( #{uname},#{total},#{addr},#{tel},#{consignee},#{zipcode});
     </insert>
@@ -52,5 +69,26 @@ where yundan=#{yundan} order by  time DESC
     </select>
     <select id="selectSellerNameByYundan" resultType="java.lang.String">
         select distinct product.sellerName from orderDetail left join product on product.pid=orderDetail.pid where yundan=#{yundan};
+    </select>
+
+    <select id="selectSellerOrderInfo" resultMap="forSellerOrderInfo">
+select
+  `order`.oid,
+  product.sellerName,
+  orderDetail.yundan,
+  orderDetail.yundanStatus,
+  `order`.time,
+  `order`.addr,
+  `order`.consignee,
+  `order`.tel,
+  product.pid,
+  product.pname,
+  product.imageURL,
+  orderDetail.num,
+  orderDetail.price
+from orderDetail
+  left join `order` on `order`.oid = orderDetail.oid
+  left join product on product.pid = orderDetail.pid
+where product.sellerName = #{sellerName} and orderDetail.yundanStatus = #{yundanStatus};
     </select>
 </mapper>

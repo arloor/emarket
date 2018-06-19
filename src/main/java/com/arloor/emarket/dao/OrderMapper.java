@@ -1,6 +1,8 @@
 package com.arloor.emarket.dao;
 
 import com.arloor.emarket.domain.Order;
+import com.arloor.emarket.model.ForSellerOrderInfo;
+import com.arloor.emarket.model.ForSellerYundanInfo;
 import com.arloor.emarket.model.YundanDetail;
 import com.arloor.emarket.model.YundanInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,4 +27,7 @@ public interface OrderMapper {
     double selectCountTotalPriceByYundan(@Param("yundan")String yundan);
 
     String selectSellerNameByYundan(@Param("yundan")String yundan);
+
+
+    List<ForSellerOrderInfo> selectSellerOrderInfo(@Param("sellerName")String sellerName,@Param("yundanStatus")String yundanStatus);
 }

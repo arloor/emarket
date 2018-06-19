@@ -71,7 +71,7 @@
 
               <view class="weui-panel__bd">
 
-                <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{yundan.yundanDetailList}}" wx:for="{{yundan.yundanDetailList}}" wx:for-item="product" wx:key="pname" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{yundan.yundanDetailList}}" wx:for-item="product" wx:key="pname" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                   <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
                   </view>
@@ -111,7 +111,7 @@
               </view>
               <view class="weui-panel__bd">
 
-                <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{yundan.yundanDetailList}}" wx:for="{{yundan.yundanDetailList}}" wx:for-item="product" wx:key="pname" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}" wx:for="{{yundan.yundanDetailList}}" wx:for-item="product" wx:key="pname" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                   <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <image class="weui-media-box__thumb" catchtap='previewImage' data-src='{{product.imageURL}}' src="{{product.imageURL}}" />
                   </view>

@@ -7,7 +7,8 @@
     "pages/home/home",
     "pages/productDetail/productDetail",
     "pages/cart/cart",
-    "pages/prebuy/prebuy"
+    "pages/prebuy/prebuy",
+    "pages/sellerHome/sellerHome"
   ],
   "window": {
     "backgroundTextStyle": "light",

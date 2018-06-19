@@ -1,0 +1,179 @@
+<!--pages/home/home.wxml-->
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+
+                   <view wx:for="{{waitOrders}}" class="page" wx:key="oid" wx:for-item="order">
+
+
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input weui-cell_vcode">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">订单号</view>
+                </view>
+
+
+                <view class="weui-cell__bd">
+                  {{order.oid}}
+                </view>
+
+                <view class="weui-cell__ft">
+                  <view class="weui-vcode-btn">发货</view>
+                  <view class="weui-vcode-btn">驳回</view>
+                </view>
+              </view>
+            </view>
+
+
+            <view class="page__bd">
+              <view class="weui-panel weui-panel_access">
+
+                <view class="weui-panel__bd">
+                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}"  wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                      <image catchtap='previewImage' data-src='{{product.imageURL}}'  class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                      <view class="weui-media-box__title">{{product.pname}}</view>
+                      <view class="weui-media-box__desc">数量：{{product.num}}</view>
+                      <view class="weui-media-box__desc">金额：{{product.price}}</view>
+                    </view>
+                  </navigator>
+                </view>
+
+                <view class="weui-panel__hd">运单号 {{order.yundan}}</view>
+                <view class="weui-panel__hd">收货人 {{order.consignee}}</view>
+                <view class="weui-panel__hd">地址 {{order.addr}}</view>
+                <view class="weui-panel__hd">电话 {{order.tel}}</view>
+                <view class="weui-panel__hd">下单时间 {{order.time}}</view>
+
+
+              </view>
+            </view>
+
+
+          </view>
+
+
+        </view>
+
+
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+
+          <view wx:for="{{transportOrders}}" class="page" wx:key="oid" wx:for-item="order">
+
+
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input weui-cell_vcode">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">订单号</view>
+                </view>
+
+
+                <view class="weui-cell__bd">
+                  {{order.oid}}
+                </view>
+
+                <view class="weui-cell__ft">
+                   <view class="weui-vcode-btn"></view>
+                  <view class="weui-vcode-btn"></view> 
+                </view>
+              </view>
+            </view>
+
+
+            <view class="page__bd">
+              <view class="weui-panel weui-panel_access">
+
+                <view class="weui-panel__bd">
+                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}"  wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                      <image catchtap='previewImage' data-src='{{product.imageURL}}'  class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                      <view class="weui-media-box__title">{{product.pname}}</view>
+                      <view class="weui-media-box__desc">数量：{{product.num}}</view>
+                      <view class="weui-media-box__desc">金额：{{product.price}}</view>
+                    </view>
+                  </navigator>
+                </view>
+
+                <view class="weui-panel__hd">运单号 {{order.yundan}}</view>
+                <view class="weui-panel__hd">收货人 {{order.consignee}}</view>
+                <view class="weui-panel__hd">地址 {{order.addr}}</view>
+                <view class="weui-panel__hd">电话 {{order.tel}}</view>
+                <view class="weui-panel__hd">下单时间 {{order.time}}</view>
+
+
+              </view>
+            </view>
+          </view>
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+
+          <view wx:for="{{completeOrders}}" class="page" wx:key="oid" wx:for-item="order">
+
+
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input weui-cell_vcode">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">订单号</view>
+                </view>
+
+
+                <view class="weui-cell__bd">
+                  {{order.oid}}
+                </view>
+
+                <view class="weui-cell__ft">
+                   <view class="weui-vcode-btn"></view>
+                  <view class="weui-vcode-btn"></view> 
+                </view>
+              </view>
+            </view>
+
+
+            <view class="page__bd">
+              <view class="weui-panel weui-panel_access">
+
+                <view class="weui-panel__bd">
+                  <navigator url="/pages/productDetail/productDetail?pid={{product.pid}}"  wx:for="{{order.yundanInfoList}}" wx:key="pid" wx:for-item="product" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                      <image  catchtap='previewImage' data-src='{{product.imageURL}}'  class="weui-media-box__thumb" src="{{product.imageURL}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                      <view class="weui-media-box__title">{{product.pname}}</view>
+                      <view class="weui-media-box__desc">数量：{{product.num}}</view>
+                      <view class="weui-media-box__desc">金额：{{product.price}}</view>
+                    </view>
+                  </navigator>
+                </view>
+
+                <view class="weui-panel__hd">运单号 {{order.yundan}}</view>
+                <view class="weui-panel__hd">收货人 {{order.consignee}}</view>
+                <view class="weui-panel__hd">地址 {{order.addr}}</view>
+                <view class="weui-panel__hd">电话 {{order.tel}}</view>
+                <view class="weui-panel__hd">下单时间 {{order.time}}</view>
+
+
+              </view>
+            </view>
+
+
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
