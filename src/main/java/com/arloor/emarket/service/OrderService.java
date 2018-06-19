@@ -1,8 +1,7 @@
 package com.arloor.emarket.service;
 
-import com.arloor.emarket.dao.EuserMapper;
-import com.arloor.emarket.dao.OrderMapper;
-import com.arloor.emarket.dao.ProductMapper;
+import com.arloor.emarket.dao.*;
+import com.arloor.emarket.domain.Consignee;
 import com.arloor.emarket.domain.Euser;
 import com.arloor.emarket.domain.Order;
 import com.arloor.emarket.domain.Product;
@@ -25,6 +24,8 @@ public class OrderService {
     ProductMapper productMapper;
     @Autowired
     OrderMapper orderMapper;
+    @Autowired
+    ConsigneeMapper consigneeMapper;
 
     @Transactional
     public NewOrderResult newOrder(List<ProductDetailWithNum> products, String uname, double total, String paykey) {
@@ -74,10 +75,14 @@ public class OrderService {
         }
 
         //下面记录订单信息
-        //首先是order表，然后是orderDetail表
+        //首先是order表，然后是orderDetail表,注意order要加入收货人信息
+        Consignee consignee=consigneeMapper.selectConsigneeByUname(uname);
         Order order=new Order();
         order.setTotal(trueTotal);
         order.setUname(uname);
+        order.setAddr(consignee.getAddr());
+        order.setTel(consignee.getTel());
+        order.setConsignee(consignee.getConsignee());
         orderMapper.insertOrder(order);//在这里通过mybaits获得了自增主键oid
         long oid=order.getOid();
 

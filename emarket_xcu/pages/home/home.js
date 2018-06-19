@@ -105,31 +105,12 @@ Page({
             success:function(res){
               console.log("服务器更新包裹为已送达的结果：", res.data);
               if(res.data==true){
-                console.log("确认到达：", e.target.dataset.yundan);
-                for (var i = 0; i < that.data.transportYundans.length; i++) {
-                  var tempCompleteYundans = that.data.completeYundans;
-                  var tempTransportYundans = [];
-                  var tempYundan = {}
-                  if (that.data.transportYundans[i].yundan == e.target.dataset.yundan) {
-                    //标记为已送达的订单
-                    tempYundan.yundan = e.target.dataset.yundan;
-                    tempYundan.yundanDetailList = [];
-                    for (var j = 0; j < that.data.transportYundans[i].yundanDetailList.length; j++) {
-                      that.data.transportYundans[i].yundanDetailList[j].yundanStatus = "已送达"
-                      tempYundan.yundanDetailList.push(that.data.transportYundans[i].yundanDetailList[j]);
-                    }
-                    tempCompleteYundans.push(tempYundan);
-                  } else {//未送达的订单
-                    tempTransportYundans.push(that.data.transportYundans[i]);
-                  }
-                }
-                that.setData({
-                  completeYundans: tempCompleteYundans,
-                  transportYundans: tempTransportYundans
-                })
-                wx.showToast({
-                  title: '确认收货成功',
-                  duration:1000
+                // wx.showToast({
+                //   title: '确认收货成功',
+                //   duration:1000,
+                // })
+                wx.redirectTo({
+                  url: '/pages/home/home',
                 })
               }else{//数据库更新包裹为已送达失败
                 wx.showModal({

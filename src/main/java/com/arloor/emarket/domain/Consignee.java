@@ -11,8 +11,6 @@ public class Consignee {
 
     private String zipcode;
 
-    private Boolean isUpdate;
-
     public String getUname() {
         return uname;
     }
@@ -52,12 +50,5 @@ public class Consignee {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
-
-    public Boolean getUpdate() {
-        return isUpdate;
-    }
-
-    public void setUpdate(Boolean update) {
-        isUpdate = update;
-    }
+    
 }

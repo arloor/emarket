@@ -3,6 +3,9 @@
 <mapper namespace="com.arloor.emarket.dao.OrderMapper">
     <resultMap id="yundanInfoMap" type="com.arloor.emarket.model.YundanInfo">
         <id property="yundan" column="yundan"/>
+        <result property="consignee" column="consignee"/>
+        <result property="addr" column="addr"/>
+        <result property="tel" column="tel"/>
         <collection property="yundanDetailList" select="com.arloor.emarket.dao.OrderMapper.selectYundanDetailsByYundan" column="yundan"/>
     </resultMap>
 
@@ -20,7 +23,7 @@
     </update>
     <select id="selectYundansByUnameStatus" resultMap="yundanInfoMap">
         select
-        distinct orderDetail.yundan
+        distinct orderDetail.yundan,order.consignee,order.tel,order.addr
         from `user`
         left join `order` on user.uname = `order`.uname
         left join orderDetail on `order`.oid = orderDetail.oid

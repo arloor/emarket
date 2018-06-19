@@ -8,6 +8,10 @@ public class Order {
   private String orderStatus;
   private java.sql.Timestamp time;
   private double total;
+  private String addr;
+  private String consignee;
+  private String tel;
+  private String zipcode;
 
 
   public long getOid() {
@@ -52,6 +56,42 @@ public class Order {
 
   public void setTotal(double total) {
     this.total = total;
+  }
+
+
+  public String getAddr() {
+    return addr;
+  }
+
+  public void setAddr(String addr) {
+    this.addr = addr;
+  }
+
+
+  public String getConsignee() {
+    return consignee;
+  }
+
+  public void setConsignee(String consignee) {
+    this.consignee = consignee;
+  }
+
+
+  public String getTel() {
+    return tel;
+  }
+
+  public void setTel(String tel) {
+    this.tel = tel;
+  }
+
+
+  public String getZipcode() {
+    return zipcode;
+  }
+
+  public void setZipcode(String zipcode) {
+    this.zipcode = zipcode;
   }
 
 }
