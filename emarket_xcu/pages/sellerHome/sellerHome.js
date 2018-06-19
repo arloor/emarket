@@ -9,7 +9,7 @@ Page({
    */
   data: {
     tabs: ["待发包裹", "在途包裹", "已达包裹"],
-    activeIndex: 1,
+    activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
 
@@ -25,6 +25,12 @@ Page({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
     });
+  },
+  fahuo:function(e){
+    console.log(e.target.dataset.oid,"发货");
+  },
+  bohui:function(e){
+    console.log(e.target.dataset.oid,"驳回");
   },
 
   /**

@@ -28,8 +28,8 @@
                 </view>
 
                 <view class="weui-cell__ft">
-                  <view class="weui-vcode-btn">发货</view>
-                  <view class="weui-vcode-btn">驳回</view>
+                  <view class="weui-vcode-btn" data-oid='{{order.oid}}' catchtap='fahuo'>发货</view>
+                  <view class="weui-vcode-btn" data-oid='{{order.oid}}' catchtap='bohui'>驳回</view>
                 </view>
               </view>
             </view>
